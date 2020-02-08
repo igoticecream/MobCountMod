@@ -1,0 +1,43 @@
+{
+    "schemaVersion": 1,
+    "id": "mobcountmod",
+    "name": "MobCountMod",
+    "version": "${mod_version}",
+
+    "description": "Updated Mob Counter Mod.",
+    "authors": [
+        "Arnevdl29",
+        "Kyzderp"
+    ],
+    "contact": {
+        "homepage": "",
+        "issues": "https://github.com/vacla/MobCountMod/issues",
+        "sources": "https://github.com/vacla/MobCountMod",
+        "twitter": "https://twitter.com/ArneLangenbergh",
+        "discord": ""
+    },
+
+    "license": "MIT",
+
+    "environment": "client",
+    "entrypoints": {
+        "main": [
+            "eu.minemania.mobcountmod.MobCountMod"
+        ],
+        "modmenu": [
+            "eu.minemania.mobcountmod.compat.modmenu.ModMenuImpl"
+        ]
+    },
+
+    "mixins": [
+        "mixins.mobcountmod.json"
+    ],
+
+    "depends": {
+        "malilib": ">=0.10.0-dev.20+arne.2"
+    },
+
+    "custom": {
+        "modmenu:clientsideOnly": true
+    }
+}
