@@ -34,7 +34,7 @@ public class DataManager {
 	private int playSoundCount = 0; // counts up so sound plays once per sec
 	private int sendMsgCount = 0; // counts up so message sends every 5 minutes
 	
-	private final String[] passives = {"Chickens: ", "Pigs: ", "Sheep: ", "Cows: ", "Horses: ", "Rabbits: ", "Wolves: ", "Ocelots: ", "Parrots: ", "Bats: ", "Cats: ", "Iron Golems: ", "Snow Golems: ", "Players: ", "Fishes: ", "Traders: ", "Dolphins: ", "Foxes: ", "Pandas: ", "Polarbears: ", "Squids: ", "Turtles: "};
+	private final String[] passives = {"Chickens: ", "Pigs: ", "Sheep: ", "Cows: ", "Horses: ", "Rabbits: ", "Wolves: ", "Ocelots: ", "Parrots: ", "Bats: ", "Cats: ", "Iron Golems: ", "Snow Golems: ", "Players: ", "Fishes: ", "Traders: ", "Dolphins: ", "Foxes: ", "Pandas: ", "Polarbears: ", "Squids: ", "Turtles: ", "Bee: "};
 	private final String[] hostiles = {"Zombies: ", "Blazes: ", "Endermans: ", "Spiders: ", "Creepers: ", "Witches: ", "Endermites: ", "Slimes: ", "Guardians: ", "Illagers: ", "Ghasts: ", "Phantoms: ", "Ravagers: ", "Shulkers: ", "Silverfishes: ", "Skeletons: ", "Vexes: "};
 	
 	public static DataManager getInstance() {

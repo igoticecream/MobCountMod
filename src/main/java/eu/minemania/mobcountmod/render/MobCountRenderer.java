@@ -84,6 +84,19 @@ public class MobCountRenderer {
 			RenderUtils.renderText(95, i * 10 - 95, color, DataManager.getPassive(i) + toDisplay);
 			color = 0xFFFFFF;
 		}
+		if (DataManager.visibleCounter() > 2) {
+			for (int i = 0; i < 1; i++)	{
+				int color = 0xFFFFFF;
+				int count = DataManager.getCounter().countEntity(i + 39);
+				totalPassive += count;
+				String toDisplay = "" + count;
+				if (count > 16) {
+					color = 0xAA0000;
+				}
+				RenderUtils.renderText(180, (i + 11) * 10 - 95, color, DataManager.getPassive(i + 22) + toDisplay);
+				color = 0xFFFFFF;
+			}
+		}
 		
 		if (DataManager.isStaff()) {
 			int color = 0xFFFFFF;
@@ -126,8 +139,8 @@ public class MobCountRenderer {
 		}
 		for (int i = 9; i < 17; i++) {
 			int count = DataManager.getCounter().countEntity(i + 22);
-			totalCount += count;
 			if (DataManager.visibleHostile() > 1) {
+				totalCount += count;
 				RenderUtils.renderText(95, i * 10 - 80 + offset, 0xFFFFFF, DataManager.getHostile(i) + count);
 			}
 		}

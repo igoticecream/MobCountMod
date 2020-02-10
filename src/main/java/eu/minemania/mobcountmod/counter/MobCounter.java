@@ -21,6 +21,7 @@ import net.minecraft.entity.mob.WitchEntity;
 import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.entity.passive.AbstractTraderEntity;
 import net.minecraft.entity.passive.BatEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.CowEntity;
@@ -67,46 +68,47 @@ public class MobCounter {
 		MinecraftClient mc = MinecraftClient.getInstance();
 		
 		switch (num) {
-		case 0: return mc.world.getEntities(ChickenEntity.class, boundingBox).size();
-		case 1: return mc.world.getEntities(PigEntity.class, boundingBox).size();
-		case 2: return mc.world.getEntities(SheepEntity.class, boundingBox).size();
-		case 3: return mc.world.getEntities(CowEntity.class, boundingBox).size();
-		case 4: return mc.world.getEntities(HorseBaseEntity.class, boundingBox).size();
-		case 5: return mc.world.getEntities(RabbitEntity.class, boundingBox).size();
-		case 6: return mc.world.getEntities(WolfEntity.class, boundingBox).size();
-		case 7: return mc.world.getEntities(OcelotEntity.class, boundingBox).size();
-		case 8: return mc.world.getEntities(ParrotEntity.class, boundingBox).size();
-		case 9: return mc.world.getEntities(BatEntity.class, boundingBox).size();
-		case 10: return mc.world.getEntities(CatEntity.class, boundingBox).size();
-		case 11: return mc.world.getEntities(IronGolemEntity.class, boundingBox).size();
-		case 12: return mc.world.getEntities(SnowGolemEntity.class, boundingBox).size();
-		case 13: return mc.world.getEntities(PlayerEntity.class, boundingBox).size() - 1;
-		case 14: return mc.world.getEntities(FishEntity.class, boundingBox).size();
-		case 15: return mc.world.getEntities(AbstractTraderEntity.class, boundingBox).size();
-		case 16: return mc.world.getEntities(DolphinEntity.class, boundingBox).size();
-		case 17: return mc.world.getEntities(FoxEntity.class, boundingBox).size();
-		case 18: return mc.world.getEntities(PandaEntity.class, boundingBox).size();
-		case 19: return mc.world.getEntities(PolarBearEntity.class, boundingBox).size();
-		case 20: return mc.world.getEntities(SquidEntity.class, boundingBox).size();
-		case 21: return mc.world.getEntities(TurtleEntity.class, boundingBox).size();
+		case 0: return mc.world.getNonSpectatingEntities(ChickenEntity.class, boundingBox).size();
+		case 1: return mc.world.getNonSpectatingEntities(PigEntity.class, boundingBox).size();
+		case 2: return mc.world.getNonSpectatingEntities(SheepEntity.class, boundingBox).size();
+		case 3: return mc.world.getNonSpectatingEntities(CowEntity.class, boundingBox).size();
+		case 4: return mc.world.getNonSpectatingEntities(HorseBaseEntity.class, boundingBox).size();
+		case 5: return mc.world.getNonSpectatingEntities(RabbitEntity.class, boundingBox).size();
+		case 6: return mc.world.getNonSpectatingEntities(WolfEntity.class, boundingBox).size();
+		case 7: return mc.world.getNonSpectatingEntities(OcelotEntity.class, boundingBox).size();
+		case 8: return mc.world.getNonSpectatingEntities(ParrotEntity.class, boundingBox).size();
+		case 9: return mc.world.getNonSpectatingEntities(BatEntity.class, boundingBox).size();
+		case 10: return mc.world.getNonSpectatingEntities(CatEntity.class, boundingBox).size();
+		case 11: return mc.world.getNonSpectatingEntities(IronGolemEntity.class, boundingBox).size();
+		case 12: return mc.world.getNonSpectatingEntities(SnowGolemEntity.class, boundingBox).size();
+		case 13: return mc.world.getNonSpectatingEntities(PlayerEntity.class, boundingBox).size() - 1;
+		case 14: return mc.world.getNonSpectatingEntities(FishEntity.class, boundingBox).size();
+		case 15: return mc.world.getNonSpectatingEntities(AbstractTraderEntity.class, boundingBox).size();
+		case 16: return mc.world.getNonSpectatingEntities(DolphinEntity.class, boundingBox).size();
+		case 17: return mc.world.getNonSpectatingEntities(FoxEntity.class, boundingBox).size();
+		case 18: return mc.world.getNonSpectatingEntities(PandaEntity.class, boundingBox).size();
+		case 19: return mc.world.getNonSpectatingEntities(PolarBearEntity.class, boundingBox).size();
+		case 20: return mc.world.getNonSpectatingEntities(SquidEntity.class, boundingBox).size();
+		case 21: return mc.world.getNonSpectatingEntities(TurtleEntity.class, boundingBox).size();
+		case 39: return mc.world.getNonSpectatingEntities(BeeEntity.class, boundingBox).size();
 		
-		case 22: return mc.world.getEntities(ZombieEntity.class, hostileBB).size();
-		case 23: return mc.world.getEntities(BlazeEntity.class, hostileBB).size();
-		case 24: return mc.world.getEntities(EndermanEntity.class, hostileBB).size();
-		case 25: return mc.world.getEntities(SpiderEntity.class, hostileBB).size();
-		case 26: return mc.world.getEntities(CreeperEntity.class, hostileBB).size();
-		case 27: return mc.world.getEntities(WitchEntity.class, hostileBB).size();
-		case 28: return mc.world.getEntities(EndermiteEntity.class, hostileBB).size();
-		case 29: return mc.world.getEntities(SlimeEntity.class, hostileBB).size();
-		case 30: return mc.world.getEntities(GuardianEntity.class, hostileBB).size();
-		case 31: return mc.world.getEntities(IllagerEntity.class, hostileBB).size();
-		case 32: return mc.world.getEntities(GhastEntity.class, hostileBB).size();
-		case 33: return mc.world.getEntities(PhantomEntity.class, hostileBB).size();
-		case 34: return mc.world.getEntities(RavagerEntity.class, hostileBB).size();
-		case 35: return mc.world.getEntities(ShulkerEntity.class, hostileBB).size();
-		case 36: return mc.world.getEntities(SilverfishEntity.class, hostileBB).size();
-		case 37: return mc.world.getEntities(AbstractSkeletonEntity.class, hostileBB).size();
-		case 38: return mc.world.getEntities(VexEntity.class, hostileBB).size();
+		case 22: return mc.world.getNonSpectatingEntities(ZombieEntity.class, hostileBB).size();
+		case 23: return mc.world.getNonSpectatingEntities(BlazeEntity.class, hostileBB).size();
+		case 24: return mc.world.getNonSpectatingEntities(EndermanEntity.class, hostileBB).size();
+		case 25: return mc.world.getNonSpectatingEntities(SpiderEntity.class, hostileBB).size();
+		case 26: return mc.world.getNonSpectatingEntities(CreeperEntity.class, hostileBB).size();
+		case 27: return mc.world.getNonSpectatingEntities(WitchEntity.class, hostileBB).size();
+		case 28: return mc.world.getNonSpectatingEntities(EndermiteEntity.class, hostileBB).size();
+		case 29: return mc.world.getNonSpectatingEntities(SlimeEntity.class, hostileBB).size();
+		case 30: return mc.world.getNonSpectatingEntities(GuardianEntity.class, hostileBB).size();
+		case 31: return mc.world.getNonSpectatingEntities(IllagerEntity.class, hostileBB).size();
+		case 32: return mc.world.getNonSpectatingEntities(GhastEntity.class, hostileBB).size();
+		case 33: return mc.world.getNonSpectatingEntities(PhantomEntity.class, hostileBB).size();
+		case 34: return mc.world.getNonSpectatingEntities(RavagerEntity.class, hostileBB).size();
+		case 35: return mc.world.getNonSpectatingEntities(ShulkerEntity.class, hostileBB).size();
+		case 36: return mc.world.getNonSpectatingEntities(SilverfishEntity.class, hostileBB).size();
+		case 37: return mc.world.getNonSpectatingEntities(AbstractSkeletonEntity.class, hostileBB).size();
+		case 38: return mc.world.getNonSpectatingEntities(VexEntity.class, hostileBB).size();
 		}
 		return 0;
 	}
@@ -114,9 +116,9 @@ public class MobCounter {
 	public void updateBB() {
 		PlayerEntity player = MinecraftClient.getInstance().player;
 		
-		int x = (int)player.x;
-		int y = (int)player.y;
-		int z = (int)player.z;
+		int x = (int)player.getX();
+		int y = (int)player.getY();
+		int z = (int)player.getZ();
 		
 		this.boundingBox = new Box(x - this.radius, y - this.radius, z - this.radius, x + this.radius, y + this.radius, z + this.radius);
 	}
@@ -125,9 +127,9 @@ public class MobCounter {
 		if (!Configs.Generic.XP5.getBooleanValue()) {
 			PlayerEntity player = MinecraftClient.getInstance().player;
 			
-			int x = (int)player.x;
-			int y = (int)player.y;
-			int z = (int)player.z;
+			int x = (int)player.getX();
+			int y = (int)player.getY();
+			int z = (int)player.getZ();
 			
 			this.hostileBB = new Box(x - this.hRadius, y - this.hRadius, z - this.hRadius, x + this.hRadius, y + this.hRadius, z + this.hRadius);
 		}

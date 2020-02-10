@@ -46,7 +46,7 @@ public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IM
 						DataManager.getCounter().decreaseRadius();
 					} else {
 						DataManager.upVisibleCounter();
-						if(DataManager.visibleCounter() > 2) {
+						if(DataManager.visibleCounter() > 3) {
 							DataManager.resetVisibleCounter();
 						}
 					}
