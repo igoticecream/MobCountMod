@@ -1,5 +1,6 @@
 package eu.minemania.mobcountmod.interfaces;
 
-public interface ITextFieldWidget {
-	int clientcommands_getMaxLengthMCM();
+public interface ITextFieldWidget
+{
+    int clientcommands_getMaxLengthMCM();
 }
