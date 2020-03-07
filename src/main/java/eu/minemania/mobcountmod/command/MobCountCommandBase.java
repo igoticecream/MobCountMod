@@ -1,38 +1,43 @@
 package eu.minemania.mobcountmod.command;
 
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
+import net.minecraft.command.CommandSource;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 
-public class MobCountCommandBase {
+public class MobCountCommandBase
+{
+    public static void localOutput(CommandSource sender, String message)
+    {
+        sendColoredText(sender, TextFormatting.AQUA, message);
+    }
 
-	public static void localOutput(ServerCommandSource sender, String message) {
-		sendColoredText(sender, Formatting.AQUA, message);
-	}
+    public static void localOutputT(CommandSource sender, String translationKey, Object... args)
+    {
+        sendColoredText(sender, TextFormatting.AQUA, new TextComponentTranslation(translationKey, args));
+    }
 
-	public static void localOutputT(ServerCommandSource sender, String translationKey, Object... args) {
+    public static void localError(CommandSource sender, String message)
+    {
+        sendColoredText(sender, TextFormatting.DARK_RED, message);
+    }
 
-		sendColoredText(sender, Formatting.AQUA, new TranslatableText(translationKey, args));
-	}
+    public static void localErrorT(CommandSource sender, String translationKey, Object... args)
+    {
+        sendColoredText(sender, TextFormatting.DARK_RED, new TextComponentTranslation(translationKey, args));
+    }
 
-	public static void localError(ServerCommandSource sender, String message) {
-		sendColoredText(sender, Formatting.DARK_RED, message);
-	}
+    public static void sendColoredText(CommandSource sender, TextFormatting color, String message)
+    {
+        ITextComponent chat = new TextComponentString(message);
+        chat.applyTextStyles(color);
+        sender.getEntity().sendMessage(chat);
+    }
 
-	public static void localErrorT(ServerCommandSource sender, String translationKey, Object... args) {
-		sendColoredText(sender, Formatting.DARK_RED, new TranslatableText(translationKey, args));
-	}
-
-	public static void sendColoredText(ServerCommandSource sender, Formatting color, String message) {
-		LiteralText chat = new LiteralText(message);
-		chat.formatted(color);
-		sender.getEntity().sendMessage(chat);
-	}
-
-	public static void sendColoredText(ServerCommandSource sender, Formatting color, Text component) {
-		component.formatted(color);
-		sender.getEntity().sendMessage(component);
-	}
+    public static void sendColoredText(CommandSource sender, TextFormatting color, ITextComponent component)
+    {
+        component.applyTextStyles(color);
+        sender.getEntity().sendMessage(component);
+    }
 }

@@ -2,18 +2,20 @@ package eu.minemania.mobcountmod.command;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.command.CommandSource;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.server.command.ServerCommandSource;
+public class FakeCommandSource extends CommandSource
+{
+    public FakeCommandSource(EntityPlayerSP player)
+    {
+        super(player, player.getPositionVector(), player.getPitchYaw(), null, 0, player.getScoreboardName(), player.getName(), null, player);
+    }
 
-public class FakeCommandSource extends ServerCommandSource {
-	public FakeCommandSource(ClientPlayerEntity player) {
-		super(player, player.getPosVector(), player.getRotationClient(), null, 0, player.getEntityName(), player.getName(), null, player);
-	}
-
-	@Override
-	public Collection<String> getPlayerNames() {
-		return MinecraftClient.getInstance().getNetworkHandler().getPlayerList().stream().map(e -> e.getProfile().getName()).collect(Collectors.toList());
-	}
+    @Override
+    public Collection<String> getPlayerNames()
+    {
+        return Minecraft.getInstance().getConnection().getPlayerInfoMap().stream().map(e -> e.getGameProfile().getName()).collect(Collectors.toList());
+    }
 }

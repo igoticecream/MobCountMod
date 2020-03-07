@@ -1,11 +1,12 @@
 {
     "required": true,
     "package": "eu.minemania.mobcountmod.mixin",
+    "refmap": "mixins.mobcountmod.refmap.json",
     "minVersion": "0.6",
     "client": [
-    	"MixinChatScreen",
-    	"MixinClientPlayerEntity",
-    	"MixinClientPlayNetworkHandler"
+        "MixinEntityPlayerSP",
+        "MixinGuiChat",
+        "MixinNetHandlerPlayClient"
     ],
     "injectors": {
     	"defaultRequire": 1

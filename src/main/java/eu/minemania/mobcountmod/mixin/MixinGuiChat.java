@@ -10,29 +10,33 @@ import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.StringReader;
 
 import eu.minemania.mobcountmod.command.ClientCommandManager;
-import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.server.command.CommandSource;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.command.ISuggestionProvider;
 
-@Mixin(ChatScreen.class)
-public class MixinChatScreen {
+@Mixin(GuiChat.class)
+public class MixinGuiChat {
 	@Shadow
-	protected TextFieldWidget chatField;
+	protected GuiTextField inputField;
 	@Shadow 
-	private ParseResults<CommandSource> parseResults;
+	private ParseResults<ISuggestionProvider> currentParse;
 
-	@Inject(method = "updateCommand", at = @At("RETURN"))
-	public void onUpdateCommandMCM(CallbackInfo ci) {
+	@Inject(method = "updateSuggestion", at = @At("RETURN"))
+	public void onUpdateCommandMCM(CallbackInfo ci)
+	{
 		boolean isClientCommand;
-		if (parseResults == null) {
+		if (currentParse == null)
+		{
 			isClientCommand = false;
-		} else {
-			StringReader reader = new StringReader(parseResults.getReader().getString());
+		}
+		else
+		{
+			StringReader reader = new StringReader(currentParse.getReader().getString());
 			reader.skip(); // /
 			String command = reader.canRead() ? reader.readUnquotedString() : "";
 			isClientCommand = ClientCommandManager.isClientSideCommand(command);
 		}
 
-		chatField.setMaxLength(isClientCommand ? 32500 : 256);
+		inputField.setMaxStringLength(isClientCommand ? 32500 : 256);
 	}
 }

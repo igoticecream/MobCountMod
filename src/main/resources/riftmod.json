@@ -1,0 +1,6 @@
+{
+    "id": "mobcountmod",
+    "name": "MobCountMod",
+    "authors": [ "Arnevdl29" ],
+    "listeners": [ "eu.minemania.mobcountmod.MobCountMod" ]
+}
