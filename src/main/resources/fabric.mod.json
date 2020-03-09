@@ -14,7 +14,7 @@
         "issues": "https://github.com/vacla/MobCountMod/issues",
         "sources": "https://github.com/vacla/MobCountMod",
         "twitter": "https://twitter.com/ArneLangenbergh",
-        "discord": ""
+        "discord": "https://discord.gg/VTHVVgt"
     },
 
     "license": "MIT",
@@ -34,7 +34,7 @@
     ],
 
     "depends": {
-        "malilib": ">=0.10.0-dev.20+arne.2"
+        "malilib": "0.10.0-dev.20+arne.2"
     },
 
     "custom": {
