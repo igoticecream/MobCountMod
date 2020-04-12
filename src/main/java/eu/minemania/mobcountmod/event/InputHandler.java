@@ -1,8 +1,11 @@
 package eu.minemania.mobcountmod.event;
 
+import com.google.common.collect.ImmutableList;
 import eu.minemania.mobcountmod.Reference;
 import eu.minemania.mobcountmod.config.Configs;
 import eu.minemania.mobcountmod.config.Hotkeys;
+import eu.minemania.mobcountmod.config.InfoToggleHostile;
+import eu.minemania.mobcountmod.config.InfoTogglePassive;
 import eu.minemania.mobcountmod.counter.DataManager;
 import fi.dy.masa.malilib.hotkeys.IHotkey;
 import fi.dy.masa.malilib.hotkeys.IKeybindManager;
@@ -32,12 +35,24 @@ public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IM
         {
             manager.addKeybindToMap(hotkey.getKeybind());
         }
+
+        for(InfoTogglePassive togglePassive : InfoTogglePassive.values())
+        {
+            manager.addKeybindToMap(togglePassive.getKeybind());
+        }
+
+        for(InfoToggleHostile toggleHostile : InfoToggleHostile.values())
+        {
+            manager.addKeybindToMap(toggleHostile.getKeybind());
+        }
     }
 
     @Override
     public void addHotkeys(IKeybindManager manager)
     {
         manager.addHotkeysForCategory(Reference.MOD_NAME, "mcm.hotkeys.category.generic_hotkeys", Hotkeys.HOTKEY_LIST);
+        manager.addHotkeysForCategory(Reference.MOD_NAME, "mcm.hotkeys.category.info_toggle_hotkeys.passive", ImmutableList.copyOf(InfoTogglePassive.values()));
+        manager.addHotkeysForCategory(Reference.MOD_NAME, "mcm.hotkeys.category.info_toggle_hotkeys.hostile", ImmutableList.copyOf(InfoToggleHostile.values()));
     }
 
     @Override
@@ -60,7 +75,7 @@ public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IM
                     else
                     {
                         DataManager.upVisibleCounter();
-                        if(DataManager.visibleCounter() > 3)
+                        if(DataManager.visibleCounter() > 1)
                         {
                             DataManager.resetVisibleCounter();
                         }
@@ -80,7 +95,7 @@ public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IM
                     else
                     {
                         DataManager.upVisibleHostile();
-                        if(DataManager.visibleHostile() > 2)
+                        if(DataManager.visibleHostile() > 1)
                         {
                             DataManager.resetVisibleHostile();
                         }

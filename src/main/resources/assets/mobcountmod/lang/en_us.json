@@ -3,5 +3,11 @@
 	"mcm.hotkeys.category.generic_hotkeys": "Generic hotkeys",
 	
 	"mcm.gui.button.config_gui.generic": "Generic",
-	"mcm.gui.button.config_gui.hotkeys": "Hotkeys"
+	"mcm.gui.button.config_gui.hotkeys": "Hotkeys",
+	
+	"mcm.gui.button.config_gui.info_toggles": "Info Toggles",
+	"mcm.gui.button.config_gui.info_line_order.hostile": "Line order hostile",
+	"mcm.gui.button.config_gui.info_line_order.passive": "Line order passive",
+	"mcm.gui.button.config_gui.info_hotkeys.hostile": "Hotkeys hostile",
+    "mcm.gui.button.config_gui.info_hotkeys.passive": "Hotkeys passive"
 }

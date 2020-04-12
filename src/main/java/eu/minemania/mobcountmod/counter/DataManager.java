@@ -1,7 +1,6 @@
 package eu.minemania.mobcountmod.counter;
 
 import java.io.File;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -34,9 +33,6 @@ public class DataManager
     private int hostileVisible = 0;
     private int playSoundCount = 0; // counts up so sound plays once per sec
     private int sendMsgCount = 0; // counts up so message sends every 5 minutes
-
-    private final String[] passives = {"Chickens: ", "Pigs: ", "Sheep: ", "Cows: ", "Horses: ", "Rabbits: ", "Wolves: ", "Ocelots: ", "Parrots: ", "Bats: ", "Cats: ", "Iron Golems: ", "Snow Golems: ", "Players: ", "Fishes: ", "Traders: ", "Dolphins: ", "Foxes: ", "Pandas: ", "Polarbears: ", "Squids: ", "Turtles: ", "Bee: "};
-    private final String[] hostiles = {"Zombies: ", "Blazes: ", "Endermans: ", "Spiders: ", "Creepers: ", "Witches: ", "Endermites: ", "Slimes: ", "Guardians: ", "Illagers: ", "Ghasts: ", "Phantoms: ", "Ravagers: ", "Shulkers: ", "Silverfishes: ", "Skeletons: ", "Vexes: "};
 
     public static DataManager getInstance()
     {
@@ -83,16 +79,6 @@ public class DataManager
         getInstance().hostileVisible = 0;
     }
 
-    public static String getHostile(int hostileId)
-    {
-        return getInstance().hostiles[hostileId];
-    }
-
-    public static String getPassive(int passiveId)
-    {
-        return getInstance().passives[passiveId];
-    }
-
     public static void setPlaySoundCount(int count)
     {
         getInstance().playSoundCount = count;
@@ -133,13 +119,8 @@ public class DataManager
     /**
      * Plays the sound "note.bass" if there are 150+ hostile mobs in the hostile mob count radius
      */
-    public void hostileLimit()
+    public void hostileLimit(int hostileCount)
     {
-        int totalCount = 0;
-        for (int i = 0; i < 17; i++)
-        {
-            totalCount += getCounter().countEntity(i + 22);
-        }
         if (this.playSoundCount != 0)
         {
             this.playSoundCount++;
@@ -148,7 +129,7 @@ public class DataManager
         {
             this.sendMsgCount++;
         }
-        if (totalCount > 149)
+        if (hostileCount > 149)
         {
             if (this.playSoundCount == 0)
             {
@@ -168,13 +149,13 @@ public class DataManager
             {
                 if (Configs.Generic.NOTIFYFACTION.getBooleanValue())
                 {
-                    MinecraftClient.getInstance().player.sendChatMessage("/ch qm f Automated Message: "	+ totalCount + " mobz. Kill pl0x.");
+                    MinecraftClient.getInstance().player.sendChatMessage("/ch qm f Automated Message: "	+ hostileCount + " mobz. Kill pl0x.");
                 }
                 if (Configs.Generic.MESSAGE_LIST.getStrings() != null && Configs.Generic.MESSAGE_LIST.getStrings().size() > 0)
                 {
                     for (String player : Configs.Generic.MESSAGE_LIST.getStrings())
                     {
-                        MinecraftClient.getInstance().player.sendChatMessage("/m " + player	+ " Automated Message: " + totalCount + " mobz. Kill pl0x.");
+                        MinecraftClient.getInstance().player.sendChatMessage("/m " + player	+ " Automated Message: " + hostileCount + " mobz. Kill pl0x.");
                     }
                 }
                 this.sendMsgCount++;
@@ -184,7 +165,7 @@ public class DataManager
                 this.sendMsgCount = -1;
             }
         }
-    } // hostileLimit
+    }
 
     public static void load()
     {

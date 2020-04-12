@@ -1,13 +1,19 @@
 package eu.minemania.mobcountmod.gui;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import eu.minemania.mobcountmod.Reference;
 import eu.minemania.mobcountmod.config.Configs;
 import eu.minemania.mobcountmod.config.Hotkeys;
+import eu.minemania.mobcountmod.config.InfoToggleHostile;
+import eu.minemania.mobcountmod.config.InfoTogglePassive;
 import eu.minemania.mobcountmod.counter.DataManager;
+import fi.dy.masa.malilib.config.ConfigType;
+import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.IConfigBase;
+import fi.dy.masa.malilib.config.IConfigValue;
 import fi.dy.masa.malilib.gui.GuiConfigsBase;
 import fi.dy.masa.malilib.gui.button.ButtonBase;
 import fi.dy.masa.malilib.gui.button.ButtonGeneric;
@@ -31,7 +37,12 @@ public class GuiConfigs extends GuiConfigsBase
         int y = 26;
 
         x += this.createButton(x, y, -1, ConfigGuiTab.GENERIC);
+        x += this.createButton(x, y, -1, ConfigGuiTab.INFO_TOGGLES);
+        x += this.createButton(x, y, -1, ConfigGuiTab.INFO_LINE_ORDER_HOSTILE);
+        x += this.createButton(x, y, -1, ConfigGuiTab.INFO_LINE_ORDER_PASSIVE);
         x += this.createButton(x, y, -1, ConfigGuiTab.HOTKEYS);
+        x += this.createButton(x, y, -1, ConfigGuiTab.INFO_HOTKEYS_HOSTILE);
+        x += this.createButton(x, y, -1, ConfigGuiTab.INFO_HOTKEYS_PASSIVE);
     }
 
     private int createButton(int x, int y, int width, ConfigGuiTab tab)
@@ -51,6 +62,11 @@ public class GuiConfigs extends GuiConfigsBase
         if(tab == ConfigGuiTab.GENERIC)
         {
             return 140;
+        } else if(tab == ConfigGuiTab.INFO_LINE_ORDER_PASSIVE ||
+                tab == ConfigGuiTab.INFO_LINE_ORDER_HOSTILE ||
+                tab == ConfigGuiTab.INFO_TOGGLES)
+        {
+            return 100;
         }
 
         return super.getConfigWidth();
@@ -59,7 +75,9 @@ public class GuiConfigs extends GuiConfigsBase
     @Override
     protected boolean useKeybindSearch()
     {
-        return DataManager.getConfigGuiTab() == ConfigGuiTab.HOTKEYS;
+        return DataManager.getConfigGuiTab() == ConfigGuiTab.HOTKEYS ||
+                DataManager.getConfigGuiTab() == ConfigGuiTab.INFO_HOTKEYS_PASSIVE ||
+                DataManager.getConfigGuiTab() == ConfigGuiTab.INFO_HOTKEYS_HOSTILE;
     }
 
     @Override
@@ -75,6 +93,29 @@ public class GuiConfigs extends GuiConfigsBase
         else if(tab == ConfigGuiTab.HOTKEYS)
         {
             configs = Hotkeys.HOTKEY_LIST;
+        }
+        else if(tab == ConfigGuiTab.INFO_TOGGLES)
+        {
+            List<IConfigValue> stuff = new ArrayList<>();
+            stuff.addAll(ConfigUtils.createConfigWrapperForType(ConfigType.BOOLEAN, ImmutableList.copyOf(InfoTogglePassive.values())));
+            stuff.addAll(ConfigUtils.createConfigWrapperForType(ConfigType.BOOLEAN, ImmutableList.copyOf(InfoToggleHostile.values())));
+            configs = stuff;
+        }
+        else if(tab == ConfigGuiTab.INFO_LINE_ORDER_PASSIVE)
+        {
+            configs = ConfigUtils.createConfigWrapperForType(ConfigType.INTEGER, ImmutableList.copyOf(InfoTogglePassive.values()));
+        }
+        else if(tab == ConfigGuiTab.INFO_LINE_ORDER_HOSTILE)
+        {
+            configs = ConfigUtils.createConfigWrapperForType(ConfigType.INTEGER, ImmutableList.copyOf(InfoToggleHostile.values()));
+        }
+        else if(tab == ConfigGuiTab.INFO_HOTKEYS_PASSIVE)
+        {
+            configs = ConfigUtils.createConfigWrapperForType(ConfigType.HOTKEY, ImmutableList.copyOf(InfoTogglePassive.values()));
+        }
+        else if(tab == ConfigGuiTab.INFO_HOTKEYS_HOSTILE)
+        {
+            configs = ConfigUtils.createConfigWrapperForType(ConfigType.HOTKEY, ImmutableList.copyOf(InfoToggleHostile.values()));
         }
         else
         {
@@ -115,7 +156,12 @@ public class GuiConfigs extends GuiConfigsBase
     public enum ConfigGuiTab
     {
         GENERIC ("mcm.gui.button.config_gui.generic"),
-        HOTKEYS ("mcm.gui.button.config_gui.hotkeys");
+        HOTKEYS ("mcm.gui.button.config_gui.hotkeys"),
+        INFO_TOGGLES ("mcm.gui.button.config_gui.info_toggles"),
+        INFO_LINE_ORDER_HOSTILE ("mcm.gui.button.config_gui.info_line_order.hostile"),
+        INFO_LINE_ORDER_PASSIVE ("mcm.gui.button.config_gui.info_line_order.passive"),
+        INFO_HOTKEYS_HOSTILE ("mcm.gui.button.config_gui.info_hotkeys.hostile"),
+        INFO_HOTKEYS_PASSIVE ("mcm.gui.button.config_gui.info_hotkeys.passive");
 
         private final String translationKey;
 
