@@ -23,11 +23,9 @@ import net.minecraft.util.registry.Registry;
 public class DataManager
 {
     private static DataManager INSTANCE = new DataManager();
-    private static boolean staff = false;
-    private static boolean rebel = false;
     private static boolean canSave;
 
-    private final MobCounter counter = new MobCounter(isStaff());
+    private final MobCounter counter = new MobCounter();
 
     private int counterVisible = 0; // 0 - not visible, 1 - compact, 2 - expanded
     private int hostileVisible = 0;
@@ -37,11 +35,6 @@ public class DataManager
     public static DataManager getInstance()
     {
         return INSTANCE;
-    }
-
-    public static boolean isStaff()
-    {
-        return staff;
     }
 
     public static MobCounter getCounter()
@@ -84,16 +77,6 @@ public class DataManager
         getInstance().playSoundCount = count;
     }
 
-    public void stuffToggle()
-    {
-        staff = !staff;
-    }
-
-    public void rubbleToggle()
-    {
-        rebel = !rebel;
-    }
-
     private static ConfigGuiTab configGuiTab = ConfigGuiTab.GENERIC;
 
     public static ConfigGuiTab getConfigGuiTab()
@@ -104,16 +87,6 @@ public class DataManager
     public static void setConfigGuiTab(ConfigGuiTab tab)
     {
         configGuiTab = tab;
-    }
-
-    public void init()
-    {
-        if (DataManager.rebel)
-        {
-            Configs.Generic.NOTIFYFACTION.setBooleanValue(true);
-            this.hostileVisible = 1;
-            Configs.Generic.XP5.setBooleanValue(true);
-        }
     }
 
     /**

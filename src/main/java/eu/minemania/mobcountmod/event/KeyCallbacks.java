@@ -5,6 +5,7 @@ import eu.minemania.mobcountmod.config.Hotkeys;
 import eu.minemania.mobcountmod.counter.DataManager;
 import eu.minemania.mobcountmod.gui.GuiConfigs;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
+import fi.dy.masa.malilib.config.options.ConfigInteger;
 import fi.dy.masa.malilib.gui.GuiBase;
 import fi.dy.masa.malilib.hotkeys.IHotkeyCallback;
 import fi.dy.masa.malilib.hotkeys.IKeybind;
@@ -18,10 +19,13 @@ public class KeyCallbacks
     {	
         IHotkeyCallback callbackHotkeys = new KeyCallbackHotkeys(mc);
         ValueChangeBooleanCallback valueChangeBooleanCallback = new ValueChangeBooleanCallback();
+        ValueChangeIntegerCallback valueChangeIntegerCallback = new ValueChangeIntegerCallback();
 
+        Configs.Generic.RADIUS_HOSTILE.setValueChangeCallback(valueChangeIntegerCallback);
+        Configs.Generic.RADIUS_PASSIVE.setValueChangeCallback(valueChangeIntegerCallback);
         Configs.Generic.XP5.setValueChangeCallback(valueChangeBooleanCallback);
 
-        Hotkeys.COUNTER.getKeybind().setCallback(callbackHotkeys);
+        Hotkeys.PASSIVE.getKeybind().setCallback(callbackHotkeys);
         Hotkeys.HOSTILE.getKeybind().setCallback(callbackHotkeys);
         Hotkeys.OPEN_GUI_SETTINGS.getKeybind().setCallback(callbackHotkeys);
     }
@@ -61,9 +65,30 @@ public class KeyCallbacks
         @Override
         public void onValueChanged(ConfigBoolean config)
         {
-            if(config == Configs.Generic.XP5 && DataManager.isStaff())
+            if(config == Configs.Generic.XP5)
             {
-                DataManager.getCounter().setXP5(Configs.Generic.XP5.getBooleanValue());;
+                DataManager.getCounter().setXP5(config.getBooleanValue());
+            }
+        }
+    }
+
+    private static class ValueChangeIntegerCallback implements IValueChangeCallback<ConfigInteger>
+    {
+
+        public ValueChangeIntegerCallback()
+        {
+        }
+
+        @Override
+        public void onValueChanged(ConfigInteger config)
+        {
+            if(config == Configs.Generic.RADIUS_HOSTILE)
+            {
+                DataManager.getCounter().setRadius(config.getIntegerValue(), false);
+            }
+            else if(config == Configs.Generic.RADIUS_PASSIVE)
+            {
+                DataManager.getCounter().setRadius(config.getIntegerValue(), true);
             }
         }
     }

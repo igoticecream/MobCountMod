@@ -7,40 +7,33 @@ import net.minecraft.util.math.Box;
 
 public class MobCounter
 {
-    private int radius;
-    private Box boundingBox;
-    private int hRadius;
-    private Box hostileBB;
+    private int radiusH;
+    private Box boundingBoxH;
+    private int radiusP;
+    private Box boundingBoxP;
 
-    public MobCounter(boolean isStaff)
+    public MobCounter()
     {
         Configs.Generic.XP5.setBooleanValue(false);
-        this.radius = 16;
 
-        if (isStaff)
-        {
-            this.hRadius = 25;
-        }
-        else
-        {
-            this.hRadius = 16;
-        }
+        this.radiusH = Configs.Generic.RADIUS_HOSTILE.getIntegerValue();
+        this.radiusP = Configs.Generic.RADIUS_PASSIVE.getIntegerValue();
 
-        this.boundingBox = new Box(0, 0, 0, 0, 0, 0);
-        this.hostileBB = new Box(0, 0, 0, 0, 0, 0);
+        this.boundingBoxH = new Box(0, 0, 0, 0, 0, 0);
+        this.boundingBoxP = new Box(0, 0, 0, 0, 0, 0);
     }
 
     public Box getPassiveBB()
     {
-        return this.boundingBox;
+        return this.boundingBoxP;
     }
 
     public Box getHostileBB()
     {
-        return this.hostileBB;
+        return this.boundingBoxH;
     }
 
-    public void updateBB()
+    public void updateBBP()
     {
         PlayerEntity player = MinecraftClient.getInstance().player;
 
@@ -48,10 +41,10 @@ public class MobCounter
         int y = (int)player.getY();
         int z = (int)player.getZ();
 
-        this.boundingBox = new Box(x - this.radius, y - this.radius, z - this.radius, x + this.radius, y + this.radius, z + this.radius);
+        this.boundingBoxP = new Box(x - this.radiusP, y - this.radiusP, z - this.radiusP, x + this.radiusP, y + this.radiusP, z + this.radiusP);
     }
 
-    public void updateHostileBB()
+    public void updateBBH()
     {
         if (!Configs.Generic.XP5.getBooleanValue())
         {
@@ -61,69 +54,55 @@ public class MobCounter
             int y = (int)player.getY();
             int z = (int)player.getZ();
 
-            this.hostileBB = new Box(x - this.hRadius, y - this.hRadius, z - this.hRadius, x + this.hRadius, y + this.hRadius, z + this.hRadius);
+            this.boundingBoxH = new Box(x - this.radiusH, y - this.radiusH, z - this.radiusH, x + this.radiusH, y + this.radiusH, z + this.radiusH);
         }
     }
 
-    public int getRadius()
+    public int getRadiusP()
     {
-        return this.radius;
+        return this.radiusP;
     }
 
-    public void increaseRadius(boolean staff)
+    public void increaseRadiusP()
     {
-        if (staff)
+        radiusP++;
+    }
+
+    public void decreaseRadiusP()
+    {
+        if (this.radiusP > 0)
         {
-            if (this.radius < 100)
-            {
-                this.radius++;
-            }
-        }
-        else
-        {
-            if (this.radius < 16)
-            {
-                this.radius++;
-            }
+            this.radiusP--;
         }
     }
 
-    public void decreaseRadius()
+    public int getRadiusH()
     {
-        if (this.radius > 0)
+        return this.radiusH;
+    }
+
+    public void increaseRadiusH()
+    {
+        this.radiusH++;
+    }
+
+    public void decreaseRadiusH()
+    {
+        if (this.radiusH > 0)
         {
-            this.radius--;
+            this.radiusH--;
         }
     }
 
-    public int getHRadius()
+    public void setRadius(int radius, boolean passive)
     {
-        return this.hRadius;
-    }
-
-    public void increaseHRadius(boolean staff)
-    {
-        if (staff)
+        if(passive)
         {
-            if (this.hRadius < 100)
-            {
-                this.hRadius++;
-            }
+            this.radiusP = radius;
         }
         else
         {
-            if (this.hRadius < 16)
-            {
-                this.hRadius++;
-            }
-        }
-    }
-
-    public void decreaseHRadius()
-    {
-        if (this.hRadius > 0)
-        {
-            this.hRadius--;
+            this.radiusH = radius;
         }
     }
 
@@ -137,6 +116,6 @@ public class MobCounter
 
     private void setXP5bounding()
     {
-        this.hostileBB = new Box(5229, 5, -4700, 5250, 34, -4692);
+        this.boundingBoxH = new Box(5229, 5, -4700, 5250, 34, -4692);
     }
 }

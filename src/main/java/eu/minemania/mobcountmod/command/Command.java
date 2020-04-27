@@ -12,7 +12,6 @@ public class Command
     {
         ClientCommandManager.clearClientSideCommands();
         MobCountCommand.register(dispatcher);
-        ZzzStuff.register(dispatcher);
 
         if (MinecraftClient.getInstance().isIntegratedServerRunning())
         {

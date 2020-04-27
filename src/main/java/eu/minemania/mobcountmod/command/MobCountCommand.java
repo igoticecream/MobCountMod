@@ -7,7 +7,7 @@ import com.mojang.brigadier.tree.CommandNode;
 
 import eu.minemania.mobcountmod.Reference;
 import eu.minemania.mobcountmod.config.Configs;
-import eu.minemania.mobcountmod.counter.DataManager;
+import fi.dy.masa.malilib.util.StringUtils;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
 
@@ -42,7 +42,7 @@ public class MobCountCommand extends MobCountCommandBase
                         .then(argument("sound file", word()).executes(MobCountCommand::sound)))
                 .then(literal("faction").executes(MobCountCommand::faction)
                         .then(argument("on", bool()).executes(MobCountCommand::faction)))
-                .then(literal("xp5").requires(s -> DataManager.isStaff()).executes(MobCountCommand::xp5)
+                .then(literal("xp5").executes(MobCountCommand::xp5)
                         .then(argument("on", bool()).executes(MobCountCommand::xp5)));
         dispatcher.register(counter);
     }
@@ -50,7 +50,7 @@ public class MobCountCommand extends MobCountCommandBase
     private static int info(CommandContext<ServerCommandSource> context)
     {
         localOutput(context.getSource(), Reference.MOD_NAME + " ["+ Reference.MOD_VERSION+"]");
-        localOutput(context.getSource(), "Type /counter help for commands.");
+        localOutputT(context.getSource(), "mcm.message.command.info");
         return 1;
     }
 
@@ -62,22 +62,23 @@ public class MobCountCommand extends MobCountCommandBase
             message = getString(context, "[player1[,player2]]");
             Configs.Generic.MESSAGE_LIST.setStrings(Arrays.asList(message.split(",")));
             String toSend = message.replaceAll(",", " ");
-            localOutput(context.getSource(), "Now notifying: " + toSend);
+            localOutputT(context.getSource(), "mcm.message.command.message", toSend);
         }
         catch (Exception e)
         {
             if(Configs.Generic.MESSAGE_LIST.getStrings() == null)
             {
-                localOutput(context.getSource(), "Not currently notifying any players.");
+                localOutputT(context.getSource(), "mcm.message.command.message.not_notify");
             }
             else
             {
-                String toSend = "Currently notifying: ";
+                String toSend = "mcm.message.command.message";
+                String names = "";
                 for (String name : Configs.Generic.MESSAGE_LIST.getStrings())
                 {
-                    toSend += name + " ";
+                    names += name + " ";
                 }
-                localOutput(context.getSource(), toSend);
+                localOutputT(context.getSource(), toSend, names);
             }
         }
         return 1;
@@ -86,7 +87,7 @@ public class MobCountCommand extends MobCountCommandBase
     private static int message_clear(CommandContext<ServerCommandSource> context)
     {
         Configs.Generic.MESSAGE_LIST.setStrings(null);
-        localOutput(context.getSource(), "Not currently notifying any players.");
+        localOutputT(context.getSource(), "mcm.message.command.message.not_notify");
         return 1;
     }
 
@@ -97,13 +98,13 @@ public class MobCountCommand extends MobCountCommandBase
         {
             soundFile = getString(context, "sound file");
             Configs.Generic.SOUNDFILE.setValueFromString(soundFile);
-            localOutput(context.getSource(), "Now using " + Configs.Generic.SOUNDFILE.getStringValue() + " as notification sound.");
+            localOutputT(context.getSource(), "mcm.message.command.sound.using", Configs.Generic.SOUNDFILE.getStringValue());
 
         }
         catch (Exception e)
         {
             soundFile = Configs.Generic.SOUNDFILE.getStringValue();
-            localOutput(context.getSource(), "Current hostile sound: " + Configs.Generic.SOUNDFILE.getStringValue());
+            localOutputT(context.getSource(), "mcm.message.command.sound.current", Configs.Generic.SOUNDFILE.getStringValue());
         }
         return 1;
     }
@@ -117,24 +118,25 @@ public class MobCountCommand extends MobCountCommandBase
             Configs.Generic.NOTIFYFACTION.setBooleanValue(on);
             if(on)
             {
-                localOutput(context.getSource(), "Now notifying in faction chat when over 150 mobs.");
+                localOutputT(context.getSource(), "mcm.message.command.faction.notify");
             }
             else
             {
-                localOutput(context.getSource(), "Not notifying in faction chat.");
+                localOutputT(context.getSource(), "mcm.message.command.faction.not_notify");
             }
         }
         catch (Exception e)
         {
-            localOutput(context.getSource(), "NotifyFaction is set to " + Configs.Generic.NOTIFYFACTION.getBooleanValue());
+            String strSetting = Configs.Generic.NOTIFYFACTION.getBooleanValue() ? "mcm.message.setting.on" : "mcm.message.setting.off";
+            localOutputT(context.getSource(), "mcm.message.command.faction.enabled", StringUtils.translate(strSetting));
         }
         if(Configs.Generic.NOTIFYFACTION.getBooleanValue())
         {
-            localOutput(context.getSource(), "Currently notifying faction chat.");
+            localOutputT(context.getSource(), "mcm.message.command.faction.notifying");
         }
         else
         {
-            localOutput(context.getSource(), "Currently not notifying faction chat.");
+            localOutputT(context.getSource(), "mcm.message.command.faction.not_notifying");
         }
         return 1;
     }
@@ -148,23 +150,24 @@ public class MobCountCommand extends MobCountCommandBase
             Configs.Generic.XP5.setBooleanValue(on);
             if(on)
             {
-                localOutput(context.getSource(), "Now counting only mobs at ShockerzXP5 kill points... mostly.");
+                localOutputT(context.getSource(), "mcm.message.command.xp5.shocker");
             }
             else
             {
-                localOutput(context.getSource(), "Using normal mob counter radius.");
+                localOutputT(context.getSource(), "mcm.message.command.xp5.normal_radius");
             }
         }
         catch (Exception e)
         {
-            localOutput(context.getSource(), "xp5 is set to " + Configs.Generic.XP5.getBooleanValue());
+            String strSetting = Configs.Generic.XP5.getBooleanValue() ? "mcm.message.setting.on" : "mcm.message.setting.off";
+            localOutputT(context.getSource(), "mcm.message.command.xp5", StringUtils.translate(strSetting));
         }
         return 1;
     }
 
     private static int help(CommandContext<ServerCommandSource> context)
     {
-        localOutput(context.getSource(), Reference.MOD_NAME + " ["+ Reference.MOD_VERSION+"] commands");
+        localOutputT(context.getSource(), "mcm.message.command.help", Reference.MOD_NAME, Reference.MOD_VERSION);
         int cmdCount = 0;
         CommandDispatcher<ServerCommandSource> dispatcher = Command.commandDispatcher;
         for(CommandNode<ServerCommandSource> command : dispatcher.getRoot().getChildren())

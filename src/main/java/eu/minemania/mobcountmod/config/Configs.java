@@ -30,22 +30,26 @@ public class Configs implements IConfigHandler
      */
     public static class Generic
     {
-        public static final ConfigBoolean ENABLED = new ConfigBoolean("enabled", true, "Enables MobCountMod fully");
-        public static final ConfigStringList MESSAGE_LIST = new ConfigStringList("messageList", ImmutableList.of(), "List to notify players");
-        public static final ConfigString SOUNDFILE = new ConfigString("soundFile", "block.note_block.bass", "Sound file");
-        public static final ConfigBoolean NOTIFYFACTION = new ConfigBoolean("notifyFaction", false, "When enabled, notifies in faction chat");
-        public static final ConfigBoolean XP5 = new ConfigBoolean("xp5", false, "When disabled, uses normal mob counter radius");
-        public static final ConfigInteger COUNT_PASSIVE = new ConfigInteger("countPassive", 16, "Amount per passive mob before too much entities");
-        public static final ConfigInteger COUNT_HOSTILE = new ConfigInteger("countHostile", 16, "Amount per hostile mob before too much entities");
+        public static final ConfigInteger COUNT_HOSTILE = new ConfigInteger("countHostile", 16, "mcm.description.config.count_hostile");
+        public static final ConfigInteger COUNT_PASSIVE = new ConfigInteger("countPassive", 16, "mcm.description.config.count_passive");
+        public static final ConfigBoolean ENABLED = new ConfigBoolean("enabled", true, "mcm.description.config.enabled");
+        public static final ConfigStringList MESSAGE_LIST = new ConfigStringList("messageList", ImmutableList.of(), "mcm.description.config.message_list");
+        public static final ConfigBoolean NOTIFYFACTION = new ConfigBoolean("notifyFaction", false, "mcm.description.config.notifyfaction");
+        public static final ConfigInteger RADIUS_HOSTILE = new ConfigInteger("radiusHostile", 16, "mcm.description.config.radius_hostile");
+        public static final ConfigInteger RADIUS_PASSIVE = new ConfigInteger("radiusPassive", 16, "mcm.description.config.radius_passive");
+        public static final ConfigString SOUNDFILE = new ConfigString("soundFile", "block.note_block.bass", "mcm.description.config.soundfile");
+        public static final ConfigBoolean XP5 = new ConfigBoolean("xp5", false, "mcm.description.config.xp5");
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
+                COUNT_HOSTILE,
+                COUNT_PASSIVE,
                 ENABLED,
                 MESSAGE_LIST,
-                SOUNDFILE,
                 NOTIFYFACTION,
-                XP5,
-                COUNT_HOSTILE,
-                COUNT_PASSIVE
+                RADIUS_HOSTILE,
+                RADIUS_PASSIVE,
+                SOUNDFILE,
+                XP5
                 );
     }
 

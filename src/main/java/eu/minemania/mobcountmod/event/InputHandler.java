@@ -62,15 +62,15 @@ public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IM
         {
             if(Configs.Generic.ENABLED.getBooleanValue())
             {
-                if (Hotkeys.COUNTER.getKeybind().isKeybindHeld())
+                if (Hotkeys.PASSIVE.getKeybind().isKeybindHeld())
                 {
                     if(keyCode == KeyCodes.KEY_UP)
                     {
-                        DataManager.getCounter().increaseRadius(DataManager.isStaff());
+                        DataManager.getCounter().increaseRadiusP();
                     }
                     else if(keyCode == KeyCodes.KEY_DOWN)
                     {
-                        DataManager.getCounter().decreaseRadius();
+                        DataManager.getCounter().decreaseRadiusP();
                     }
                     else
                     {
@@ -86,11 +86,11 @@ public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IM
                 {
                     if(keyCode == KeyCodes.KEY_UP)
                     {
-                        DataManager.getCounter().increaseHRadius(DataManager.isStaff());
+                        DataManager.getCounter().increaseRadiusH();
                     }
                     else if(keyCode == KeyCodes.KEY_DOWN)
                     {
-                        DataManager.getCounter().decreaseHRadius();
+                        DataManager.getCounter().decreaseRadiusH();
                     }
                     else
                     {

@@ -10,32 +10,33 @@ import fi.dy.masa.malilib.hotkeys.IKeybind;
 import fi.dy.masa.malilib.hotkeys.KeyCallbackToggleBoolean;
 import fi.dy.masa.malilib.hotkeys.KeybindMulti;
 import fi.dy.masa.malilib.hotkeys.KeybindSettings;
+import fi.dy.masa.malilib.util.StringUtils;
 
 public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
 {
-    CHICKEN         ("infoChicken",         false, 1,  "", "Show the amount of chickens"),
-    PIG             ("infoPig",             false, 2,  "", "Show the amount of pigs"),
-    SHEEP           ("infoSheep",           false, 3,  "", "Show the amount of sheep"),
-    COW             ("infoCow",             false, 4,  "", "Show the amount of cows"),
-    HORSE           ("infoHorse",           false, 5,  "", "Show the amount of horses"),
-    RABBIT          ("infoRabbit",          false, 6,  "", "Show the amount of rabbits"),
-    WOLF            ("infoWolf",            false, 7,  "", "Show the amount of wolves"),
-    OCELOT          ("infoOcelot",          false, 8,  "", "Show the amount of ocelots"),
-    PARROT          ("infoParrot",          false, 9,  "", "Show the amount of parrots"),
-    BAT             ("infoBat",             false, 10, "", "Show the amount of bats"),
-    CAT             ("infoCat",             false, 11, "", "Show the amount of cats"),
-    IRONGOLEM       ("infoIronGolem",       false, 12, "", "Show the amount of iron golems"),
-    SNOWGOLEM       ("infoSnowGolem",       false, 13, "", "Show the amount of snow golems"),
-    PLAYER          ("infoPlayer",          false, 14, "", "Show the amount of players"),
-    FISH            ("infoFish",            false, 15, "", "Show the amount of fishes"),
-    TRADER          ("infoTrader",          false, 16, "", "Show the amount of traders"),
-    DOLPHIN         ("infoDolphin",         false, 17, "", "Show the amount of dolphins"),
-    FOX             ("infoFox",             false, 18, "", "Show the amount of foxes"),
-    PANDA           ("infoPanda",           false, 19, "", "Show the amount of pandas"),
-    POLARBEAR       ("infoPolarBear",       false, 20, "", "Show the amount of polarbears"),
-    SQUID           ("infoSquid",           false, 21, "", "Show the amount of squids"),
-    TURTLE          ("infoTurtle",          false, 22, "", "Show the amount of turtles"),
-    BEE             ("infoBee",             false, 23, "", "Show the amount of bees");
+    CHICKEN         ("infoChicken",   "entity.minecraft.chicken",       false, 1,  "", "mcm.description.config.infotoggle", "chickens"),
+    PIG             ("infoPig",       "entity.minecraft.pig",           false, 2,  "", "mcm.description.config.infotoggle", "pigs"),
+    SHEEP           ("infoSheep",     "entity.minecraft.sheep",         false, 3,  "", "mcm.description.config.infotoggle", "sheep"),
+    COW             ("infoCow",       "entity.minecraft.cow",           false, 4,  "", "mcm.description.config.infotoggle", "cows"),
+    HORSE           ("infoHorse",     "entity.minecraft.horse",         false, 5,  "", "mcm.description.config.infotoggle", "horses"),
+    RABBIT          ("infoRabbit",    "entity.minecraft.rabbit",        false, 6,  "", "mcm.description.config.infotoggle", "rabbits"),
+    WOLF            ("infoWolf",      "entity.minecraft.wolf",          false, 7,  "", "mcm.description.config.infotoggle", "wolves"),
+    OCELOT          ("infoOcelot",    "entity.minecraft.ocelot",        false, 8,  "", "mcm.description.config.infotoggle", "ocelots"),
+    PARROT          ("infoParrot",    "entity.minecraft.parrot",        false, 9,  "", "mcm.description.config.infotoggle", "parrots"),
+    BAT             ("infoBat",       "entity.minecraft.bat",           false, 10, "", "mcm.description.config.infotoggle", "bats"),
+    CAT             ("infoCat",       "entity.minecraft.cat",           false, 11, "", "mcm.description.config.infotoggle", "cats"),
+    IRONGOLEM       ("infoIronGolem", "entity.minecraft.iron_golem",    false, 12, "", "mcm.description.config.infotoggle", "iron golems"),
+    SNOWGOLEM       ("infoSnowGolem", "entity.minecraft.snow_golem",    false, 13, "", "mcm.description.config.infotoggle", "snow golems"),
+    PLAYER          ("infoPlayer",    "entity.minecraft.player",        false, 14, "", "mcm.description.config.infotoggle", "players"),
+    FISH            ("infoFish",      "entity.minecraft.tropical_fish", false, 15, "", "mcm.description.config.infotoggle", "fishes"),
+    TRADER          ("infoTrader",    "entity.minecraft.villager",      false, 16, "", "mcm.description.config.infotoggle", "traders"),
+    DOLPHIN         ("infoDolphin",   "entity.minecraft.dolphin",       false, 17, "", "mcm.description.config.infotoggle", "dolphins"),
+    FOX             ("infoFox",       "entity.minecraft.fox",           false, 18, "", "mcm.description.config.infotoggle", "foxes"),
+    PANDA           ("infoPanda",     "entity.minecraft.panda",         false, 19, "", "mcm.description.config.infotoggle", "pandas"),
+    POLARBEAR       ("infoPolarBear", "entity.minecraft.polar_bear",    false, 20, "", "mcm.description.config.infotoggle", "polarbears"),
+    SQUID           ("infoSquid",     "entity.minecraft.squid",         false, 21, "", "mcm.description.config.infotoggle", "squids"),
+    TURTLE          ("infoTurtle",    "entity.minecraft.turtle",        false, 22, "", "mcm.description.config.infotoggle", "turtles"),
+    BEE             ("infoBee",       "entity.minecraft.bee",           false, 23, "", "mcm.description.config.infotoggle", "bees");
 
     private final String name;
     private final String prettyName;
@@ -45,16 +46,17 @@ public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
     private final int defaultLinePosition;
     private boolean valueBoolean;
     private int linePosition;
+    private Object[] commentArgs;
 
-    private InfoTogglePassive(String name, boolean defaultValue, int linePosition, String defaultHotkey, String comment)
+    private InfoTogglePassive(String name, String prettyName, boolean defaultValue, int linePosition, String defaultHotkey, String comment, Object... commentArgs)
     {
-        this(name, defaultValue, linePosition, defaultHotkey, comment, KeybindSettings.DEFAULT);
+        this(name, prettyName, defaultValue, linePosition, defaultHotkey, comment, KeybindSettings.DEFAULT, commentArgs);
     }
 
-    private InfoTogglePassive(String name, boolean defaultValue, int linePosition, String defaultHotkey, String comment, KeybindSettings settings)
+    private InfoTogglePassive(String name, String prettyName, boolean defaultValue, int linePosition, String defaultHotkey, String comment, KeybindSettings settings, Object... commentArgs)
     {
         this.name = name;
-        this.prettyName = name.replace("info", "");
+        this.prettyName = prettyName;
         this.valueBoolean = defaultValue;
         this.defaultValueBoolean = defaultValue;
         this.keybind = KeybindMulti.fromStorageString(defaultHotkey, settings);
@@ -62,6 +64,7 @@ public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
         this.linePosition = linePosition;
         this.defaultLinePosition = linePosition;
         this.comment = comment;
+        this.commentArgs = commentArgs;
     }
 
     @Override
@@ -79,13 +82,22 @@ public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
     @Override
     public String getPrettyName()
     {
-        return this.prettyName;
+        return StringUtils.translate(this.prettyName);
     }
 
     @Override
     public String getComment()
     {
-        return comment != null ? this.comment : "";
+        return comment != null ? StringUtils.translate(this.comment, getCommentArgs()) : "";
+    }
+
+    public Object[] getCommentArgs()
+    {
+        if(this.commentArgs != null)
+        {
+            return this.commentArgs;
+        }
+        return new Object[0];
     }
 
     @Override

@@ -10,26 +10,27 @@ import fi.dy.masa.malilib.hotkeys.IKeybind;
 import fi.dy.masa.malilib.hotkeys.KeyCallbackToggleBoolean;
 import fi.dy.masa.malilib.hotkeys.KeybindMulti;
 import fi.dy.masa.malilib.hotkeys.KeybindSettings;
+import fi.dy.masa.malilib.util.StringUtils;
 
 public enum InfoToggleHostile implements IConfigInteger, IHotkeyTogglable
 {
-    ZOMBIE                ("infoZombie",                false, 1,  "", "Show the amount of zombies"),
-    BLAZE                 ("infoBlaze",                 false, 13, "", "Show the amount of blazes"),
-    ENDERMAN              ("infoEnderman",              false, 15, "", "Show the amount of endermans"),
-    SPIDER                ("infoSpider",                false, 2,  "", "Show the amount of spiders"),
-    CREEPER               ("infoCreeper",               false, 3,  "", "Show the amount of creepers"),
-    WITCH                 ("infoWitch",                 false, 4,  "", "Show the amount of witches"),
-    ENDERMITE             ("infoEndermite",             false, 5,  "", "Show the amount of endermites"),
-    SLIME                 ("infoSlime",                 false, 6,  "", "Show the amount of slimes"),
-    GUARDIAN              ("infoGuardian",              false, 7,  "", "Show the amount of guardians"),
-    ILLAGER               ("infoIllager",               false, 8,  "", "Show the amount of illagers"),
-    GHAST                 ("infoGhast",                 false, 14, "", "Show the amount of ghasts"),
-    PHANTOM               ("infoPhantom",               false, 9,  "", "Show the amount of phantoms"),
-    RAVAGER               ("infoRavager",               false, 10, "", "Show the amount of ravagers"),
-    SHULKER               ("infoShulker",               false, 16, "", "Show the amount of shulkers"),
-    SILVERFISH            ("infoSilverfish",            false, 17, "", "Show the amount of silverfishes"),
-    SKELETON              ("infoSkeleton",              false, 11, "", "Show the amount of skeletons"),
-    VEX                   ("infoVex",                   false, 12, "", "Show the amount of vexes");
+    ZOMBIE                ("infoZombie",     "entity.minecraft.zombie",     false, 1,  "", "mcm.description.config.infotoggle", "zombies"),
+    BLAZE                 ("infoBlaze",      "entity.minecraft.blaze",      false, 13, "", "mcm.description.config.infotoggle", "blazes"),
+    ENDERMAN              ("infoEnderman",   "entity.minecraft.enderman",   false, 15, "", "mcm.description.config.infotoggle", "endermans"),
+    SPIDER                ("infoSpider",     "entity.minecraft.spider",     false, 2,  "", "mcm.description.config.infotoggle", "spiders"),
+    CREEPER               ("infoCreeper",    "entity.minecraft.creeper",    false, 3,  "", "mcm.description.config.infotoggle", "creepers"),
+    WITCH                 ("infoWitch",      "entity.minecraft.witch",      false, 4,  "", "mcm.description.config.infotoggle", "witches"),
+    ENDERMITE             ("infoEndermite",  "entity.minecraft.endermite",  false, 5,  "", "mcm.description.config.infotoggle", "endermites"),
+    SLIME                 ("infoSlime",      "entity.minecraft.slime",      false, 6,  "", "mcm.description.config.infotoggle", "slimes"),
+    GUARDIAN              ("infoGuardian",   "entity.minecraft.guardian",   false, 7,  "", "mcm.description.config.infotoggle", "guardians"),
+    ILLAGER               ("infoIllager",    "entity.minecraft.pillager",   false, 8,  "", "mcm.description.config.infotoggle", "illagers"),
+    GHAST                 ("infoGhast",      "entity.minecraft.ghast",      false, 14, "", "mcm.description.config.infotoggle", "ghasts"),
+    PHANTOM               ("infoPhantom",    "entity.minecraft.phantom",    false, 9,  "", "mcm.description.config.infotoggle", "phantoms"),
+    RAVAGER               ("infoRavager",    "entity.minecraft.ravager",    false, 10, "", "mcm.description.config.infotoggle", "ravagers"),
+    SHULKER               ("infoShulker",    "entity.minecraft.shulker",    false, 16, "", "mcm.description.config.infotoggle", "shulkers"),
+    SILVERFISH            ("infoSilverfish", "entity.minecraft.silverfish", false, 17, "", "mcm.description.config.infotoggle", "silverfishes"),
+    SKELETON              ("infoSkeleton",   "entity.minecraft.skeleton",   false, 11, "", "mcm.description.config.infotoggle", "skeletons"),
+    VEX                   ("infoVex",        "entity.minecraft.vex",        false, 12, "", "mcm.description.config.infotoggle", "vexes");
 
     private final String name;
     private final String prettyName;
@@ -39,16 +40,17 @@ public enum InfoToggleHostile implements IConfigInteger, IHotkeyTogglable
     private final int defaultLinePosition;
     private boolean valueBoolean;
     private int linePosition;
+    private Object[] commentArgs;
 
-    private InfoToggleHostile(String name, boolean defaultValue, int linePosition, String defaultHotkey, String comment)
+    private InfoToggleHostile(String name, String prettyName, boolean defaultValue, int linePosition, String defaultHotkey, String comment, Object... commentArgs)
     {
-        this(name, defaultValue, linePosition, defaultHotkey, comment, KeybindSettings.DEFAULT);
+        this(name, prettyName, defaultValue, linePosition, defaultHotkey, comment, KeybindSettings.DEFAULT, commentArgs);
     }
 
-    private InfoToggleHostile(String name, boolean defaultValue, int linePosition, String defaultHotkey, String comment, KeybindSettings settings)
+    private InfoToggleHostile(String name, String prettyName, boolean defaultValue, int linePosition, String defaultHotkey, String comment, KeybindSettings settings, Object... commentArgs)
     {
         this.name = name;
-        this.prettyName = name.replace("info", "");
+        this.prettyName = prettyName;
         this.valueBoolean = defaultValue;
         this.defaultValueBoolean = defaultValue;
         this.keybind = KeybindMulti.fromStorageString(defaultHotkey, settings);
@@ -56,6 +58,7 @@ public enum InfoToggleHostile implements IConfigInteger, IHotkeyTogglable
         this.linePosition = linePosition;
         this.defaultLinePosition = linePosition;
         this.comment = comment;
+        this.commentArgs = commentArgs;
     }
 
     @Override
@@ -73,13 +76,22 @@ public enum InfoToggleHostile implements IConfigInteger, IHotkeyTogglable
     @Override
     public String getPrettyName()
     {
-        return this.prettyName;
+        return StringUtils.translate(this.prettyName);
     }
 
     @Override
     public String getComment()
     {
-        return comment != null ? this.comment : "";
+        return comment != null ? StringUtils.translate(this.comment, getCommentArgs()) : "";
+    }
+
+    public Object[] getCommentArgs()
+    {
+        if(this.commentArgs != null)
+        {
+            return this.commentArgs;
+        }
+        return new Object[0];
     }
 
     @Override

@@ -10,13 +10,13 @@ import com.google.common.collect.ImmutableList;
  */
 public class Hotkeys
 {
-    public static final ConfigHotkey COUNTER = new ConfigHotkey("togglePassive", "P",  "Toggle Passive Counter");
-    public static final ConfigHotkey HOSTILE = new ConfigHotkey("toggleHostile", "O",  "Toggle Hostile Counter");
-    public static final ConfigHotkey OPEN_GUI_SETTINGS = new ConfigHotkey("openGuiSettings", "P,C",  "Open the Config GUI");
+    public static final ConfigHotkey PASSIVE = new ConfigHotkey("togglePassive", "P",  "mcm.description.hotkey.passive");
+    public static final ConfigHotkey HOSTILE = new ConfigHotkey("toggleHostile", "O",  "mcm.description.hotkey.hostile");
+    public static final ConfigHotkey OPEN_GUI_SETTINGS = new ConfigHotkey("openGuiSettings", "P,C",  "mcm.description.hotkey.open_gui_settings");
 
     public static final List<ConfigHotkey> HOTKEY_LIST = ImmutableList.of(
-            COUNTER,
             HOSTILE,
-            OPEN_GUI_SETTINGS
+            OPEN_GUI_SETTINGS,
+            PASSIVE
             );
 }

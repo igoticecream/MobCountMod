@@ -91,18 +91,18 @@ public class MobCountRenderer
 
         if(DataManager.visibleCounter() == 1)
         {
-            DataManager.getCounter().updateBB();
-            RenderUtils.renderText(5, 5, 0xFFAA00, "Radius: " + DataManager.getCounter().getRadius());
+            DataManager.getCounter().updateBBP();
+            RenderUtils.renderText(5, 5, 0xFFAA00, StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusP()));
             RenderUtils.renderText(5, 15, StringUtils.getColor("#E0E0E0", 0), this.linesPassive);
-            RenderUtils.renderText(60, 5, getColor(this.totalPassive, true), "Total: " + this.totalPassive);
+            RenderUtils.renderText(60, 5, getColor(this.totalPassive, true), StringUtils.translate("mcm.message.mobcounter.total", this.totalPassive));
         }
 
         if(DataManager.visibleHostile() == 1)
         {
-            DataManager.getCounter().updateHostileBB();
-            RenderUtils.renderText(125, 5, 0xFFAA00, "Radius: " + DataManager.getCounter().getHRadius());
+            DataManager.getCounter().updateBBH();
+            RenderUtils.renderText(125, 5, 0xFFAA00, StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusH()));
             RenderUtils.renderText(125, 15, StringUtils.getColor("#E0E0E0", 0), this.linesHostile);
-            RenderUtils.renderText(180, 5, getColor(this.totalHostile, false), "Total: " + this.totalHostile);
+            RenderUtils.renderText(180, 5, getColor(this.totalHostile, false), StringUtils.translate("mcm.message.mobcounter.total", this.totalHostile));
         }
     }
 
