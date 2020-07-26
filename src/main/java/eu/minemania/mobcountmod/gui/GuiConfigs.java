@@ -3,6 +3,7 @@ package eu.minemania.mobcountmod.gui;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import com.google.common.collect.ImmutableList;
 import eu.minemania.mobcountmod.Reference;
 import eu.minemania.mobcountmod.config.Configs;
@@ -59,10 +60,11 @@ public class GuiConfigs extends GuiConfigsBase
     {
         ConfigGuiTab tab = DataManager.getConfigGuiTab();
 
-        if(tab == ConfigGuiTab.GENERIC)
+        if (tab == ConfigGuiTab.GENERIC)
         {
             return 140;
-        } else if(tab == ConfigGuiTab.INFO_LINE_ORDER_PASSIVE ||
+        }
+        else if (tab == ConfigGuiTab.INFO_LINE_ORDER_PASSIVE ||
                 tab == ConfigGuiTab.INFO_LINE_ORDER_HOSTILE ||
                 tab == ConfigGuiTab.INFO_TOGGLES)
         {
@@ -86,34 +88,34 @@ public class GuiConfigs extends GuiConfigsBase
         List<? extends IConfigBase> configs;
         ConfigGuiTab tab = DataManager.getConfigGuiTab();
 
-        if(tab == ConfigGuiTab.GENERIC)
+        if (tab == ConfigGuiTab.GENERIC)
         {
             configs = Configs.Generic.OPTIONS;
         }
-        else if(tab == ConfigGuiTab.HOTKEYS)
+        else if (tab == ConfigGuiTab.HOTKEYS)
         {
             configs = Hotkeys.HOTKEY_LIST;
         }
-        else if(tab == ConfigGuiTab.INFO_TOGGLES)
+        else if (tab == ConfigGuiTab.INFO_TOGGLES)
         {
             List<IConfigValue> stuff = new ArrayList<>();
             stuff.addAll(ConfigUtils.createConfigWrapperForType(ConfigType.BOOLEAN, ImmutableList.copyOf(InfoTogglePassive.values())));
             stuff.addAll(ConfigUtils.createConfigWrapperForType(ConfigType.BOOLEAN, ImmutableList.copyOf(InfoToggleHostile.values())));
             configs = stuff;
         }
-        else if(tab == ConfigGuiTab.INFO_LINE_ORDER_PASSIVE)
+        else if (tab == ConfigGuiTab.INFO_LINE_ORDER_PASSIVE)
         {
             configs = ConfigUtils.createConfigWrapperForType(ConfigType.INTEGER, ImmutableList.copyOf(InfoTogglePassive.values()));
         }
-        else if(tab == ConfigGuiTab.INFO_LINE_ORDER_HOSTILE)
+        else if (tab == ConfigGuiTab.INFO_LINE_ORDER_HOSTILE)
         {
             configs = ConfigUtils.createConfigWrapperForType(ConfigType.INTEGER, ImmutableList.copyOf(InfoToggleHostile.values()));
         }
-        else if(tab == ConfigGuiTab.INFO_HOTKEYS_PASSIVE)
+        else if (tab == ConfigGuiTab.INFO_HOTKEYS_PASSIVE)
         {
             configs = ConfigUtils.createConfigWrapperForType(ConfigType.HOTKEY, ImmutableList.copyOf(InfoTogglePassive.values()));
         }
-        else if(tab == ConfigGuiTab.INFO_HOTKEYS_HOSTILE)
+        else if (tab == ConfigGuiTab.INFO_HOTKEYS_HOSTILE)
         {
             configs = ConfigUtils.createConfigWrapperForType(ConfigType.HOTKEY, ImmutableList.copyOf(InfoToggleHostile.values()));
         }
@@ -155,13 +157,13 @@ public class GuiConfigs extends GuiConfigsBase
 
     public enum ConfigGuiTab
     {
-        GENERIC ("mcm.gui.button.config_gui.generic"),
-        HOTKEYS ("mcm.gui.button.config_gui.hotkeys"),
-        INFO_TOGGLES ("mcm.gui.button.config_gui.info_toggles"),
-        INFO_LINE_ORDER_HOSTILE ("mcm.gui.button.config_gui.info_line_order.hostile"),
-        INFO_LINE_ORDER_PASSIVE ("mcm.gui.button.config_gui.info_line_order.passive"),
-        INFO_HOTKEYS_HOSTILE ("mcm.gui.button.config_gui.info_hotkeys.hostile"),
-        INFO_HOTKEYS_PASSIVE ("mcm.gui.button.config_gui.info_hotkeys.passive");
+        GENERIC("mcm.gui.button.config_gui.generic"),
+        HOTKEYS("mcm.gui.button.config_gui.hotkeys"),
+        INFO_TOGGLES("mcm.gui.button.config_gui.info_toggles"),
+        INFO_LINE_ORDER_HOSTILE("mcm.gui.button.config_gui.info_line_order.hostile"),
+        INFO_LINE_ORDER_PASSIVE("mcm.gui.button.config_gui.info_line_order.passive"),
+        INFO_HOTKEYS_HOSTILE("mcm.gui.button.config_gui.info_hotkeys.hostile"),
+        INFO_HOTKEYS_PASSIVE("mcm.gui.button.config_gui.info_hotkeys.passive");
 
         private final String translationKey;
 

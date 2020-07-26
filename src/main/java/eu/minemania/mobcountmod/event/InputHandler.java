@@ -31,17 +31,17 @@ public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IM
     @Override
     public void addKeysToMap(IKeybindManager manager)
     {
-        for(IHotkey hotkey : Hotkeys.HOTKEY_LIST)
+        for (IHotkey hotkey : Hotkeys.HOTKEY_LIST)
         {
             manager.addKeybindToMap(hotkey.getKeybind());
         }
 
-        for(InfoTogglePassive togglePassive : InfoTogglePassive.values())
+        for (InfoTogglePassive togglePassive : InfoTogglePassive.values())
         {
             manager.addKeybindToMap(togglePassive.getKeybind());
         }
 
-        for(InfoToggleHostile toggleHostile : InfoToggleHostile.values())
+        for (InfoToggleHostile toggleHostile : InfoToggleHostile.values())
         {
             manager.addKeybindToMap(toggleHostile.getKeybind());
         }
@@ -60,22 +60,22 @@ public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IM
     {
         if (eventKeyState)
         {
-            if(Configs.Generic.ENABLED.getBooleanValue())
+            if (Configs.Generic.ENABLED.getBooleanValue())
             {
                 if (Hotkeys.PASSIVE.getKeybind().isKeybindHeld())
                 {
-                    if(keyCode == KeyCodes.KEY_UP)
+                    if (keyCode == KeyCodes.KEY_UP)
                     {
                         DataManager.getCounter().increaseRadiusP();
                     }
-                    else if(keyCode == KeyCodes.KEY_DOWN)
+                    else if (keyCode == KeyCodes.KEY_DOWN)
                     {
                         DataManager.getCounter().decreaseRadiusP();
                     }
                     else
                     {
                         DataManager.upVisibleCounter();
-                        if(DataManager.visibleCounter() > 1)
+                        if (DataManager.visibleCounter() > 1)
                         {
                             DataManager.resetVisibleCounter();
                         }
@@ -84,18 +84,18 @@ public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IM
                 }
                 if (Hotkeys.HOSTILE.getKeybind().isKeybindHeld())
                 {
-                    if(keyCode == KeyCodes.KEY_UP)
+                    if (keyCode == KeyCodes.KEY_UP)
                     {
                         DataManager.getCounter().increaseRadiusH();
                     }
-                    else if(keyCode == KeyCodes.KEY_DOWN)
+                    else if (keyCode == KeyCodes.KEY_DOWN)
                     {
                         DataManager.getCounter().decreaseRadiusH();
                     }
                     else
                     {
                         DataManager.upVisibleHostile();
-                        if(DataManager.visibleHostile() > 1)
+                        if (DataManager.visibleHostile() > 1)
                         {
                             DataManager.resetVisibleHostile();
                         }

@@ -14,39 +14,40 @@ import fi.dy.masa.malilib.util.StringUtils;
 
 public enum InfoToggleHostile implements IConfigInteger, IHotkeyTogglable
 {
-    BLAZE                 ("infoBlaze",          "entity.minecraft.blaze",          false, 13, "", "mcm.description.config.infotoggle", "blazes"),
-    CAVE_SPIDER           ("infoCaveSpider",     "entity.minecraft.cave_spider",    false, 18, "", "mcm.description.config.infotoggle", "cave spiders"),
-    CREEPER               ("infoCreeper",        "entity.minecraft.creeper",        false, 3,  "", "mcm.description.config.infotoggle", "creepers"),
-    DROWNED               ("infoDrowned",        "entity.minecraft.drowned",        false, 19, "", "mcm.description.config.infotoggle", "drowneds"),
-    ELDER_GUARDIAN        ("infoElderGuardian",  "entity.minecraft.elder_guardian", false, 20, "", "mcm.description.config.infotoggle", "elder guardians"),
-    ENDERMAN              ("infoEnderman",       "entity.minecraft.enderman",       false, 15, "", "mcm.description.config.infotoggle", "endermans"),
-    ENDERMITE             ("infoEndermite",      "entity.minecraft.endermite",      false, 5,  "", "mcm.description.config.infotoggle", "endermites"),
-    EVOKER                ("infoEvoker",         "entity.minecraft.evoker",         false, 21, "", "mcm.description.config.infotoggle", "evokers"),
-    GHAST                 ("infoGhast",          "entity.minecraft.ghast",          false, 14, "", "mcm.description.config.infotoggle", "ghasts"),
-    GUARDIAN              ("infoGuardian",       "entity.minecraft.guardian",       false, 7,  "", "mcm.description.config.infotoggle", "guardians"),
-    HUSK                  ("infoHusk",           "entity.minecraft.husk",           false, 22, "", "mcm.description.config.infotoggle", "husks"),
-    ILLUSIONER            ("infoIllusioner",     "entity.minecraft.illusioner",     false, 23, "", "mcm.description.config.infotoggle", "illusioners"),
-    MAGMA_CUBE            ("infoMagmaCube",      "entity.minecraft.magma_cube",     false, 24, "", "mcm.description.config.infotoggle", "magma cubes"),
-    PHANTOM               ("infoPhantom",        "entity.minecraft.phantom",        false, 9,  "", "mcm.description.config.infotoggle", "phantoms"),
-    PILLAGER              ("infoPillager",       "entity.minecraft.pillager",       false, 8,  "", "mcm.description.config.infotoggle", "pillagers"),
-    RAVAGER               ("infoRavager",        "entity.minecraft.ravager",        false, 10, "", "mcm.description.config.infotoggle", "ravagers"),
-    SHULKER               ("infoShulker",        "entity.minecraft.shulker",        false, 16, "", "mcm.description.config.infotoggle", "shulkers"),
-    SILVERFISH            ("infoSilverfish",     "entity.minecraft.silverfish",     false, 17, "", "mcm.description.config.infotoggle", "silverfishes"),
-    SKELETON              ("infoSkeleton",       "entity.minecraft.skeleton",       false, 11, "", "mcm.description.config.infotoggle", "skeletons"),
-    SLIME                 ("infoSlime",          "entity.minecraft.slime",          false, 6,  "", "mcm.description.config.infotoggle", "slimes"),
-    SPIDER                ("infoSpider",         "entity.minecraft.spider",         false, 2,  "", "mcm.description.config.infotoggle", "spiders"),
-    STRAY                 ("infoStray",          "entity.minecraft.stray",          false, 25, "", "mcm.description.config.infotoggle", "strays"),
-    VEX                   ("infoVex",            "entity.minecraft.vex",            false, 12, "", "mcm.description.config.infotoggle", "vexes"),
-    VINDICATOR            ("infoVindicator",     "entity.minecraft.vindicator",     false, 26, "", "mcm.description.config.infotoggle", "vindicators"),
-    WITCH                 ("infoWitch",          "entity.minecraft.witch",          false, 4,  "", "mcm.description.config.infotoggle", "witches"),
-    WITHER_SKELETON       ("infoWitherSkeleton", "entity.minecraft.wither_skeleton",false, 27, "", "mcm.description.config.infotoggle", "wither skeletons"),
-    ZOMBIE                ("infoZombie",         "entity.minecraft.zombie",         false, 1,  "", "mcm.description.config.infotoggle", "zombies"),
-    ZOMBIE_PIGMAN         ("infoZombiePigman",   "entity.minecraft.zombie_pigman",  false, 28, "", "mcm.description.config.infotoggle", "zombie pigmans"),
-    ZOMBIE_VILLAGER       ("infoZombieVillager", "entity.minecraft.zombie_villager",false, 29, "", "mcm.description.config.infotoggle", "zombie villagers");
+    BLAZE("infoBlaze", false, 13, "", "blazes"),
+    CAVE_SPIDER("infoCaveSpider", false, 18, "", "cave spiders"),
+    CREEPER("infoCreeper", false, 3, "", "creepers"),
+    DROWNED("infoDrowned", false, 19, "", "drowneds"),
+    ELDER_GUARDIAN("infoElderGuardian", false, 20, "", "elder guardians"),
+    ENDERMAN("infoEnderman", false, 15, "", "endermans"),
+    ENDERMITE("infoEndermite", false, 5, "", "endermites"),
+    EVOKER("infoEvoker", false, 21, "", "evokers"),
+    GHAST("infoGhast", false, 14, "", "ghasts"),
+    GUARDIAN("infoGuardian", false, 7, "", "guardians"),
+    HOGLIN("infoHoglin", false, 30, "", "hoglins"),
+    HUSK("infoHusk", false, 22, "", "husks"),
+    ILLUSIONER("infoIllusioner", false, 23, "", "illusioners"),
+    MAGMA_CUBE("infoMagmaCube", false, 24, "", "magma cubes"),
+    PHANTOM("infoPhantom", false, 9, "", "phantoms"),
+    PIGLIN("infoPiglin", false, 31, "", "piglins"),
+    PILLAGER("infoPillager", false, 8, "", "pillagers"),
+    RAVAGER("infoRavager", false, 10, "", "ravagers"),
+    SHULKER("infoShulker", false, 16, "", "shulkers"),
+    SILVERFISH("infoSilverfish", false, 17, "", "silverfishes"),
+    SKELETON("infoSkeleton", false, 11, "", "skeletons"),
+    SLIME("infoSlime", false, 6, "", "slimes"),
+    SPIDER("infoSpider", false, 2, "", "spiders"),
+    STRAY("infoStray", false, 25, "", "strays"),
+    VEX("infoVex", false, 12, "", "vexes"),
+    VINDICATOR("infoVindicator", false, 26, "", "vindicators"),
+    WITCH("infoWitch", false, 4, "", "witches"),
+    WITHER_SKELETON("infoWitherSkeleton", false, 27, "", "wither skeletons"),
+    ZOGLIN("infoZoglin", false, 32, "", "zoglins"),
+    ZOMBIE("infoZombie", false, 1, "", "zombies"),
+    ZOMBIE_VILLAGER("infoZombieVillager", false, 29, "", "zombie villagers"),
+    ZOMBIFIED_PIGLIN("infoZombifiedPiglin", false, 28, "", "zombified piglins");
 
     private final String name;
-    private final String prettyName;
-    private final String comment;
     private final IKeybind keybind;
     private final boolean defaultValueBoolean;
     private final int defaultLinePosition;
@@ -54,22 +55,20 @@ public enum InfoToggleHostile implements IConfigInteger, IHotkeyTogglable
     private int linePosition;
     private Object[] commentArgs;
 
-    private InfoToggleHostile(String name, String prettyName, boolean defaultValue, int linePosition, String defaultHotkey, String comment, Object... commentArgs)
+    InfoToggleHostile(String name, boolean defaultValue, int linePosition, String defaultHotkey, Object... commentArgs)
     {
-        this(name, prettyName, defaultValue, linePosition, defaultHotkey, comment, KeybindSettings.DEFAULT, commentArgs);
+        this(name, defaultValue, linePosition, defaultHotkey, KeybindSettings.DEFAULT, commentArgs);
     }
 
-    private InfoToggleHostile(String name, String prettyName, boolean defaultValue, int linePosition, String defaultHotkey, String comment, KeybindSettings settings, Object... commentArgs)
+    InfoToggleHostile(String name, boolean defaultValue, int linePosition, String defaultHotkey, KeybindSettings settings, Object... commentArgs)
     {
         this.name = name;
-        this.prettyName = prettyName;
         this.valueBoolean = defaultValue;
         this.defaultValueBoolean = defaultValue;
         this.keybind = KeybindMulti.fromStorageString(defaultHotkey, settings);
         this.keybind.setCallback(new KeyCallbackToggleBoolean(this));
         this.linePosition = linePosition;
         this.defaultLinePosition = linePosition;
-        this.comment = comment;
         this.commentArgs = commentArgs;
     }
 
@@ -86,20 +85,14 @@ public enum InfoToggleHostile implements IConfigInteger, IHotkeyTogglable
     }
 
     @Override
-    public String getPrettyName()
-    {
-        return StringUtils.translate(this.prettyName);
-    }
-
-    @Override
     public String getComment()
     {
-        return comment != null ? StringUtils.translate(this.comment, getCommentArgs()) : "";
+        return StringUtils.translate("mcm.description.config.infotoggle", getCommentArgs());
     }
 
     public Object[] getCommentArgs()
     {
-        if(this.commentArgs != null)
+        if (this.commentArgs != null)
         {
             return this.commentArgs;
         }
@@ -111,7 +104,7 @@ public enum InfoToggleHostile implements IConfigInteger, IHotkeyTogglable
     {
         try
         {
-            if(element.isJsonPrimitive())
+            if (element.isJsonPrimitive())
             {
                 this.valueBoolean = element.getAsBoolean();
             }

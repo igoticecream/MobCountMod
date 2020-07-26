@@ -50,7 +50,7 @@ public class Configs implements IConfigHandler
                 RADIUS_PASSIVE,
                 SOUNDFILE,
                 XP5
-                );
+        );
     }
 
     /**
@@ -60,11 +60,11 @@ public class Configs implements IConfigHandler
     {
         File configFile = new File(FileUtils.getConfigDirectory(), CONFIG_FILE_NAME);
 
-        if(configFile.exists() && configFile.isFile() && configFile.canRead())
+        if (configFile.exists() && configFile.isFile() && configFile.canRead())
         {
             JsonElement element = JsonUtils.parseJsonFile(configFile);
 
-            if(element != null && element.isJsonObject())
+            if (element != null && element.isJsonObject())
             {
                 JsonObject root = element.getAsJsonObject();
                 JsonObject objInfoLineOrdersHostile = JsonUtils.getNestedObject(root, "InfoLineOrdersHostile", false);
@@ -75,22 +75,22 @@ public class Configs implements IConfigHandler
                 ConfigUtils.readHotkeyToggleOptions(root, "InfoHotkeysHostile", "InfoTypeTogglesHostile", ImmutableList.copyOf(InfoToggleHostile.values()));
                 ConfigUtils.readHotkeyToggleOptions(root, "InfoHotkeysPassive", "InfoTypeTogglesPassive", ImmutableList.copyOf(InfoTogglePassive.values()));
 
-                if(objInfoLineOrdersHostile != null)
+                if (objInfoLineOrdersHostile != null)
                 {
-                    for(InfoToggleHostile toggle : InfoToggleHostile.values())
+                    for (InfoToggleHostile toggle : InfoToggleHostile.values())
                     {
-                        if(JsonUtils.hasInteger(objInfoLineOrdersHostile, toggle.getName()))
+                        if (JsonUtils.hasInteger(objInfoLineOrdersHostile, toggle.getName()))
                         {
                             toggle.setIntegerValue(JsonUtils.getInteger(objInfoLineOrdersHostile, toggle.getName()));
                         }
                     }
                 }
 
-                if(objInfoLineOrdersPassive != null)
+                if (objInfoLineOrdersPassive != null)
                 {
-                    for(InfoTogglePassive toggle : InfoTogglePassive.values())
+                    for (InfoTogglePassive toggle : InfoTogglePassive.values())
                     {
-                        if(JsonUtils.hasInteger(objInfoLineOrdersPassive, toggle.getName()))
+                        if (JsonUtils.hasInteger(objInfoLineOrdersPassive, toggle.getName()))
                         {
                             toggle.setIntegerValue(JsonUtils.getInteger(objInfoLineOrdersPassive, toggle.getName()));
                         }
@@ -107,7 +107,7 @@ public class Configs implements IConfigHandler
     {
         File dir = FileUtils.getConfigDirectory();
 
-        if((dir.exists() && dir.isDirectory()) || dir.mkdirs())
+        if ((dir.exists() && dir.isDirectory()) || dir.mkdirs())
         {
             JsonObject root = new JsonObject();
             JsonObject objInfoLineOrdersHostile = JsonUtils.getNestedObject(root, "InfoLineOrdersHostile", true);
@@ -118,12 +118,12 @@ public class Configs implements IConfigHandler
             ConfigUtils.writeHotkeyToggleOptions(root, "InfoHotkeysHostile", "InfoTypeTogglesHostile", ImmutableList.copyOf(InfoToggleHostile.values()));
             ConfigUtils.writeHotkeyToggleOptions(root, "InfoHotkeysPassive", "InfoTypeTogglesPassive", ImmutableList.copyOf(InfoTogglePassive.values()));
 
-            for(InfoToggleHostile toggle : InfoToggleHostile.values())
+            for (InfoToggleHostile toggle : InfoToggleHostile.values())
             {
                 objInfoLineOrdersHostile.add(toggle.getName(), new JsonPrimitive(toggle.getIntegerValue()));
             }
 
-            for(InfoTogglePassive toggle : InfoTogglePassive.values())
+            for (InfoTogglePassive toggle : InfoTogglePassive.values())
             {
                 objInfoLineOrdersPassive.add(toggle.getName(), new JsonPrimitive(toggle.getIntegerValue()));
             }

@@ -3,6 +3,7 @@ package eu.minemania.mobcountmod.render;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import eu.minemania.mobcountmod.config.Configs;
 import eu.minemania.mobcountmod.config.InfoToggleHostile;
 import eu.minemania.mobcountmod.config.InfoTogglePassive;
@@ -11,6 +12,7 @@ import fi.dy.masa.malilib.gui.GuiBase;
 import fi.dy.masa.malilib.render.RenderUtils;
 import fi.dy.masa.malilib.util.StringUtils;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.FishEntity;
@@ -32,40 +34,40 @@ public class MobCountRenderer
         return INSTANCE;
     }
 
-    public static void renderOverlays()
+    public static void renderOverlays(MatrixStack matrixStack)
     {
         MinecraftClient mc = MinecraftClient.getInstance();
         DataManager.getInstance().hostileLimit(getInstance().totalHostile);
-        if(mc.currentScreen == null && MinecraftClient.isHudEnabled())
+        if (mc.currentScreen == null && MinecraftClient.isHudEnabled())
         {
-            getInstance().renderHUD();
+            getInstance().renderHUD(matrixStack);
         }
     }
 
-    public void renderHUD()
+    public void renderHUD(MatrixStack matrixStack)
     {
         long currentTime = System.currentTimeMillis();
 
-        if(currentTime - this.infoUpdateTime >= 50)
+        if (currentTime - this.infoUpdateTime >= 50)
         {
             this.updateLines();
             this.infoUpdateTime = currentTime;
         }
 
-        if(DataManager.visibleCounter() == 1)
+        if (DataManager.visibleCounter() == 1)
         {
             DataManager.getCounter().updateBBP();
-            RenderUtils.renderText(5, 5, 0xFFAA00, StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusP()));
-            RenderUtils.renderText(5, 15, StringUtils.getColor("#E0E0E0", 0), this.linesPassive);
-            RenderUtils.renderText(60, 5, getColor(this.totalPassive, true), StringUtils.translate("mcm.message.mobcounter.total", this.totalPassive));
+            RenderUtils.renderText(5, 5, 0xFFAA00, StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusP()), matrixStack);
+            RenderUtils.renderText(5, 15, StringUtils.getColor("#E0E0E0", 0), this.linesPassive, matrixStack);
+            RenderUtils.renderText(60, 5, getColor(this.totalPassive, true), StringUtils.translate("mcm.message.mobcounter.total", this.totalPassive), matrixStack);
         }
 
-        if(DataManager.visibleHostile() == 1)
+        if (DataManager.visibleHostile() == 1)
         {
             DataManager.getCounter().updateBBH();
-            RenderUtils.renderText(125, 5, 0xFFAA00, StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusH()));
-            RenderUtils.renderText(125, 15, StringUtils.getColor("#E0E0E0", 0), this.linesHostile);
-            RenderUtils.renderText(180, 5, getColor(this.totalHostile, false), StringUtils.translate("mcm.message.mobcounter.total", this.totalHostile));
+            RenderUtils.renderText(125, 5, 0xFFAA00, StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusH()), matrixStack);
+            RenderUtils.renderText(125, 15, StringUtils.getColor("#E0E0E0", 0), this.linesHostile, matrixStack);
+            RenderUtils.renderText(180, 5, getColor(this.totalHostile, false), StringUtils.translate("mcm.message.mobcounter.total", this.totalHostile), matrixStack);
         }
     }
 
@@ -80,17 +82,17 @@ public class MobCountRenderer
         List<LinePosHostile> positionsHostile = new ArrayList<LinePosHostile>();
 
 
-        for(InfoTogglePassive toggle : InfoTogglePassive.values())
+        for (InfoTogglePassive toggle : InfoTogglePassive.values())
         {
-            if(toggle.getBooleanValue())
+            if (toggle.getBooleanValue())
             {
                 positionsPassive.add(new LinePosPassive(toggle.getIntegerValue(), toggle));
             }
         }
 
-        for(InfoToggleHostile toggle : InfoToggleHostile.values())
+        for (InfoToggleHostile toggle : InfoToggleHostile.values())
         {
-            if(toggle.getBooleanValue())
+            if (toggle.getBooleanValue())
             {
                 positionsHostile.add(new LinePosHostile(toggle.getIntegerValue(), toggle));
             }
@@ -99,7 +101,7 @@ public class MobCountRenderer
         Collections.sort(positionsPassive);
         Collections.sort(positionsHostile);
 
-        for(LinePosPassive pos : positionsPassive)
+        for (LinePosPassive pos : positionsPassive)
         {
             try
             {
@@ -111,7 +113,7 @@ public class MobCountRenderer
             }
         }
 
-        for(LinePosHostile pos : positionsHostile)
+        for (LinePosHostile pos : positionsHostile)
         {
             try
             {
@@ -126,12 +128,12 @@ public class MobCountRenderer
         this.linesHostile.clear();
         this.linesPassive.clear();
 
-        for(StringHolder holder : this.lineWrappersHostile)
+        for (StringHolder holder : this.lineWrappersHostile)
         {
             this.linesHostile.add(holder.str);
         }
 
-        for(StringHolder holder : this.lineWrappersPassive)
+        for (StringHolder holder : this.lineWrappersPassive)
         {
             this.linesPassive.add(holder.str);
         }
@@ -140,11 +142,11 @@ public class MobCountRenderer
     private int getColor(int amount, boolean passive)
     {
         int color = 0xFFFFFF;
-        if(passive && amount > 149)
+        if (passive && amount > 149)
         {
             color = 0xAA0000;
         }
-        else if(!passive)
+        else if (!passive)
         {
             if (amount > 149)
             { // if 150+ mobs, display in red.
@@ -168,275 +170,291 @@ public class MobCountRenderer
         this.lineWrappersPassive.add(new StringHolder(text));
     }
 
-    private <T extends Entity> String lineText(InfoTogglePassive type, EntityType<T> entity)
+    private <T extends Entity> String lineTextP(EntityType<T> entity)
     {
         MinecraftClient mc = MinecraftClient.getInstance();
-        int size = mc.world.getEntities(entity, DataManager.getCounter().getPassiveBB(), EntityPredicates.EXCEPT_SPECTATOR).size() - (!type.getPrettyName().equals("Player") ? 0 : (mc.player.isSpectator() ? 0 : 1));
+        int size = mc.world.getEntities(entity, DataManager.getCounter().getPassiveBB(), EntityPredicates.EXCEPT_SPECTATOR).size() - (!StringUtils.translate(entity.getTranslationKey()).equals("Player") ? 0 : (mc.player.isSpectator() ? 0 : 1));
         totalPassive += size;
-        return String.format("%s: %s%d%s", type.getPrettyName(), size > Configs.Generic.COUNT_PASSIVE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
+        return String.format("%s: %s%d%s", StringUtils.translate(entity.getTranslationKey()), size > Configs.Generic.COUNT_PASSIVE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
     }
 
-    private <T extends Entity> String lineText(InfoTogglePassive type, Class<? extends T> entity)
+    private <T extends Entity> String lineText(Class<? extends T> entity)
     {
         MinecraftClient mc = MinecraftClient.getInstance();
-        int size = mc.world.getEntities(entity, DataManager.getCounter().getPassiveBB(), EntityPredicates.EXCEPT_SPECTATOR).size() - (!type.getPrettyName().equals("Player") ? 0 : (mc.player.isSpectator() ? 0 : 1));
+        int size = mc.world.getEntities(entity, DataManager.getCounter().getPassiveBB(), EntityPredicates.EXCEPT_SPECTATOR).size();
         totalPassive += size;
-        return String.format("%s: %s%d%s", type.getPrettyName(), size > Configs.Generic.COUNT_PASSIVE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
+        return String.format("%s: %s%d%s", StringUtils.translate(EntityType.TROPICAL_FISH.getTranslationKey()), size > Configs.Generic.COUNT_PASSIVE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
     }
 
-    private <T extends Entity> String lineText(InfoToggleHostile type, EntityType<T> entity)
+    private <T extends Entity> String lineTextH(EntityType<T> entity)
     {
         MinecraftClient mc = MinecraftClient.getInstance();
         int size = mc.world.getEntities(entity, DataManager.getCounter().getHostileBB(), EntityPredicates.EXCEPT_SPECTATOR).size();
         totalHostile += size;
-        return String.format("%s: %s%d%s", type.getPrettyName(), size > Configs.Generic.COUNT_HOSTILE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
+        return String.format("%s: %s%d%s", StringUtils.translate(entity.getTranslationKey()), size > Configs.Generic.COUNT_HOSTILE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
     }
 
     private void addLinePassive(InfoTogglePassive type)
     {
-        if(type == InfoTogglePassive.BAT)
+        if (type == InfoTogglePassive.BAT)
         {
-            this.addLinePassive(lineText(type, EntityType.BAT));
+            this.addLinePassive(lineTextP(EntityType.BAT));
         }
-        else if(type == InfoTogglePassive.BEE)
+        else if (type == InfoTogglePassive.BEE)
         {
-            this.addLinePassive(lineText(type, EntityType.BEE));
+            this.addLinePassive(lineTextP(EntityType.BEE));
         }
-        else if(type == InfoTogglePassive.CAT)
+        else if (type == InfoTogglePassive.CAT)
         {
-            this.addLinePassive(lineText(type, EntityType.CAT));
+            this.addLinePassive(lineTextP(EntityType.CAT));
         }
-        else if(type == InfoTogglePassive.CHICKEN)
+        else if (type == InfoTogglePassive.CHICKEN)
         {
-            this.addLinePassive(lineText(type, EntityType.CHICKEN));
+            this.addLinePassive(lineTextP(EntityType.CHICKEN));
         }
-        else if(type == InfoTogglePassive.COW)
+        else if (type == InfoTogglePassive.COW)
         {
-            this.addLinePassive(lineText(type, EntityType.COW));
+            this.addLinePassive(lineTextP(EntityType.COW));
         }
-        else if(type == InfoTogglePassive.DONKEY)
+        else if (type == InfoTogglePassive.DONKEY)
         {
-            this.addLinePassive(lineText(type, EntityType.DONKEY));
+            this.addLinePassive(lineTextP(EntityType.DONKEY));
         }
-        else if(type == InfoTogglePassive.DOLPHIN)
+        else if (type == InfoTogglePassive.DOLPHIN)
         {
-            this.addLinePassive(lineText(type, EntityType.DOLPHIN));
+            this.addLinePassive(lineTextP(EntityType.DOLPHIN));
         }
-        else if(type == InfoTogglePassive.FISH)
+        else if (type == InfoTogglePassive.FISH)
         {
-            this.addLinePassive(lineText(type, FishEntity.class));
+            this.addLinePassive(lineText(FishEntity.class));
         }
-        else if(type == InfoTogglePassive.FOX)
+        else if (type == InfoTogglePassive.FOX)
         {
-            this.addLinePassive(lineText(type, EntityType.FOX));
+            this.addLinePassive(lineTextP(EntityType.FOX));
         }
-        else if(type == InfoTogglePassive.HORSE)
+        else if (type == InfoTogglePassive.HORSE)
         {
-            this.addLinePassive(lineText(type, EntityType.HORSE));
+            this.addLinePassive(lineTextP(EntityType.HORSE));
         }
-        else if(type == InfoTogglePassive.IRONGOLEM)
+        else if (type == InfoTogglePassive.IRONGOLEM)
         {
-            this.addLinePassive(lineText(type, EntityType.IRON_GOLEM));
+            this.addLinePassive(lineTextP(EntityType.IRON_GOLEM));
         }
-        else if(type == InfoTogglePassive.LLAMA)
+        else if (type == InfoTogglePassive.LLAMA)
         {
-            this.addLinePassive(lineText(type, EntityType.LLAMA));
+            this.addLinePassive(lineTextP(EntityType.LLAMA));
         }
-        else if(type == InfoTogglePassive.MOOSHROOM)
+        else if (type == InfoTogglePassive.MOOSHROOM)
         {
-            this.addLinePassive(lineText(type, EntityType.MOOSHROOM));
+            this.addLinePassive(lineTextP(EntityType.MOOSHROOM));
         }
-        else if(type == InfoTogglePassive.MULE)
+        else if (type == InfoTogglePassive.MULE)
         {
-            this.addLinePassive(lineText(type, EntityType.MULE));
+            this.addLinePassive(lineTextP(EntityType.MULE));
         }
-        else if(type == InfoTogglePassive.OCELOT)
+        else if (type == InfoTogglePassive.OCELOT)
         {
-            this.addLinePassive(lineText(type, EntityType.OCELOT));
+            this.addLinePassive(lineTextP(EntityType.OCELOT));
         }
-        else if(type == InfoTogglePassive.PANDA)
+        else if (type == InfoTogglePassive.PANDA)
         {
-            this.addLinePassive(lineText(type, EntityType.PANDA));
+            this.addLinePassive(lineTextP(EntityType.PANDA));
         }
-        else if(type == InfoTogglePassive.PARROT)
+        else if (type == InfoTogglePassive.PARROT)
         {
-            this.addLinePassive(lineText(type, EntityType.PARROT));
+            this.addLinePassive(lineTextP(EntityType.PARROT));
         }
-        else if(type == InfoTogglePassive.PIG)
+        else if (type == InfoTogglePassive.PIG)
         {
-            this.addLinePassive(lineText(type, EntityType.PIG));
+            this.addLinePassive(lineTextP(EntityType.PIG));
         }
-        else if(type == InfoTogglePassive.PLAYER)
+        else if (type == InfoTogglePassive.PLAYER)
         {
-            this.addLinePassive(lineText(type, EntityType.PLAYER));
+            this.addLinePassive(lineTextP(EntityType.PLAYER));
         }
-        else if(type == InfoTogglePassive.POLARBEAR)
+        else if (type == InfoTogglePassive.POLARBEAR)
         {
-            this.addLinePassive(lineText(type, EntityType.POLAR_BEAR));
+            this.addLinePassive(lineTextP(EntityType.POLAR_BEAR));
         }
-        else if(type == InfoTogglePassive.RABBIT)
+        else if (type == InfoTogglePassive.RABBIT)
         {
-            this.addLinePassive(lineText(type, EntityType.RABBIT));
+            this.addLinePassive(lineTextP(EntityType.RABBIT));
         }
-        else if(type == InfoTogglePassive.SHEEP)
+        else if (type == InfoTogglePassive.SHEEP)
         {
-            this.addLinePassive(lineText(type, EntityType.SHEEP));
+            this.addLinePassive(lineTextP(EntityType.SHEEP));
         }
-        else if(type == InfoTogglePassive.SKELETON_HORSE)
+        else if (type == InfoTogglePassive.SKELETON_HORSE)
         {
-            this.addLinePassive(lineText(type, EntityType.SKELETON_HORSE));
+            this.addLinePassive(lineTextP(EntityType.SKELETON_HORSE));
         }
-        else if(type == InfoTogglePassive.SNOW_GOLEM)
+        else if (type == InfoTogglePassive.SNOW_GOLEM)
         {
-            this.addLinePassive(lineText(type, EntityType.SNOW_GOLEM));
+            this.addLinePassive(lineTextP(EntityType.SNOW_GOLEM));
         }
-        else if(type == InfoTogglePassive.SQUID)
+        else if (type == InfoTogglePassive.SQUID)
         {
-            this.addLinePassive(lineText(type, EntityType.SQUID));
+            this.addLinePassive(lineTextP(EntityType.SQUID));
         }
-        else if(type == InfoTogglePassive.TRADER_LLAMA)
+        else if (type == InfoTogglePassive.STRIDER)
         {
-            this.addLinePassive(lineText(type, EntityType.TRADER_LLAMA));
+            this.addLinePassive(lineTextP(EntityType.STRIDER));
         }
-        else if(type == InfoTogglePassive.TURTLE)
+        else if (type == InfoTogglePassive.TRADER_LLAMA)
         {
-            this.addLinePassive(lineText(type, EntityType.TURTLE));
+            this.addLinePassive(lineTextP(EntityType.TRADER_LLAMA));
         }
-        else if(type == InfoTogglePassive.VILLAGER)
+        else if (type == InfoTogglePassive.TURTLE)
         {
-            this.addLinePassive(lineText(type, EntityType.VILLAGER));
+            this.addLinePassive(lineTextP(EntityType.TURTLE));
         }
-        else if(type == InfoTogglePassive.WANDERING_TRADER)
+        else if (type == InfoTogglePassive.VILLAGER)
         {
-            this.addLinePassive(lineText(type, EntityType.WANDERING_TRADER));
+            this.addLinePassive(lineTextP(EntityType.VILLAGER));
         }
-        else if(type == InfoTogglePassive.WOLF)
+        else if (type == InfoTogglePassive.WANDERING_TRADER)
         {
-            this.addLinePassive(lineText(type, EntityType.WOLF));
+            this.addLinePassive(lineTextP(EntityType.WANDERING_TRADER));
         }
-        else if(type == InfoTogglePassive.ZOMBIE_HORSE)
+        else if (type == InfoTogglePassive.WOLF)
         {
-            this.addLinePassive(lineText(type, EntityType.ZOMBIE_HORSE));
+            this.addLinePassive(lineTextP(EntityType.WOLF));
+        }
+        else if (type == InfoTogglePassive.ZOMBIE_HORSE)
+        {
+            this.addLinePassive(lineTextP(EntityType.ZOMBIE_HORSE));
         }
     }
 
     private void addLineHostile(InfoToggleHostile type)
     {
-        if(type == InfoToggleHostile.BLAZE)
+        if (type == InfoToggleHostile.BLAZE)
         {
-            this.addLineHostile(lineText(type, EntityType.BLAZE));
+            this.addLineHostile(lineTextH(EntityType.BLAZE));
         }
-        else if(type == InfoToggleHostile.CAVE_SPIDER)
+        else if (type == InfoToggleHostile.CAVE_SPIDER)
         {
-            this.addLineHostile(lineText(type, EntityType.CAVE_SPIDER));
+            this.addLineHostile(lineTextH(EntityType.CAVE_SPIDER));
         }
-        else if(type == InfoToggleHostile.CREEPER)
+        else if (type == InfoToggleHostile.CREEPER)
         {
-            this.addLineHostile(lineText(type, EntityType.CREEPER));
+            this.addLineHostile(lineTextH(EntityType.CREEPER));
         }
-        else if(type == InfoToggleHostile.DROWNED)
+        else if (type == InfoToggleHostile.DROWNED)
         {
-            this.addLineHostile(lineText(type, EntityType.DROWNED));
+            this.addLineHostile(lineTextH(EntityType.DROWNED));
         }
-        else if(type == InfoToggleHostile.ELDER_GUARDIAN)
+        else if (type == InfoToggleHostile.ELDER_GUARDIAN)
         {
-            this.addLineHostile(lineText(type, EntityType.ELDER_GUARDIAN));
+            this.addLineHostile(lineTextH(EntityType.ELDER_GUARDIAN));
         }
-        else if(type == InfoToggleHostile.ENDERMAN)
+        else if (type == InfoToggleHostile.ENDERMAN)
         {
-            this.addLineHostile(lineText(type, EntityType.ENDERMAN));
+            this.addLineHostile(lineTextH(EntityType.ENDERMAN));
         }
-        else if(type == InfoToggleHostile.ENDERMITE)
+        else if (type == InfoToggleHostile.ENDERMITE)
         {
-            this.addLineHostile(lineText(type, EntityType.ENDERMITE));
+            this.addLineHostile(lineTextH(EntityType.ENDERMITE));
         }
-        else if(type == InfoToggleHostile.EVOKER)
+        else if (type == InfoToggleHostile.EVOKER)
         {
-            this.addLineHostile(lineText(type, EntityType.EVOKER));
+            this.addLineHostile(lineTextH(EntityType.EVOKER));
         }
-        else if(type == InfoToggleHostile.GHAST)
+        else if (type == InfoToggleHostile.GHAST)
         {
-            this.addLineHostile(lineText(type, EntityType.GHAST));
+            this.addLineHostile(lineTextH(EntityType.GHAST));
         }
-        else if(type == InfoToggleHostile.GUARDIAN)
+        else if (type == InfoToggleHostile.GUARDIAN)
         {
-            this.addLineHostile(lineText(type, EntityType.GUARDIAN));
+            this.addLineHostile(lineTextH(EntityType.GUARDIAN));
         }
-        else if(type == InfoToggleHostile.HUSK)
+        else if (type == InfoToggleHostile.HOGLIN)
         {
-            this.addLineHostile(lineText(type, EntityType.HUSK));
+            this.addLineHostile(lineTextH(EntityType.HOGLIN));
         }
-        else if(type == InfoToggleHostile.ILLUSIONER)
+        else if (type == InfoToggleHostile.HUSK)
         {
-            this.addLineHostile(lineText(type, EntityType.ILLUSIONER));
+            this.addLineHostile(lineTextH(EntityType.HUSK));
         }
-        else if(type == InfoToggleHostile.MAGMA_CUBE)
+        else if (type == InfoToggleHostile.ILLUSIONER)
         {
-            this.addLineHostile(lineText(type, EntityType.MAGMA_CUBE));
+            this.addLineHostile(lineTextH(EntityType.ILLUSIONER));
         }
-        else if(type == InfoToggleHostile.PHANTOM)
+        else if (type == InfoToggleHostile.MAGMA_CUBE)
         {
-            this.addLineHostile(lineText(type, EntityType.PHANTOM));
+            this.addLineHostile(lineTextH(EntityType.MAGMA_CUBE));
         }
-        else if(type == InfoToggleHostile.PILLAGER)
+        else if (type == InfoToggleHostile.PHANTOM)
         {
-            this.addLineHostile(lineText(type, EntityType.PILLAGER));
+            this.addLineHostile(lineTextH(EntityType.PHANTOM));
         }
-        else if(type == InfoToggleHostile.RAVAGER)
+        else if (type == InfoToggleHostile.PIGLIN)
         {
-            this.addLineHostile(lineText(type, EntityType.RAVAGER));
+            this.addLineHostile(lineTextH(EntityType.PIGLIN));
         }
-        else if(type == InfoToggleHostile.SHULKER)
+        else if (type == InfoToggleHostile.PILLAGER)
         {
-            this.addLineHostile(lineText(type, EntityType.SHULKER));
+            this.addLineHostile(lineTextH(EntityType.PILLAGER));
         }
-        else if(type == InfoToggleHostile.SILVERFISH)
+        else if (type == InfoToggleHostile.RAVAGER)
         {
-            this.addLineHostile(lineText(type, EntityType.SILVERFISH));
+            this.addLineHostile(lineTextH(EntityType.RAVAGER));
         }
-        else if(type == InfoToggleHostile.SKELETON)
+        else if (type == InfoToggleHostile.SHULKER)
         {
-            this.addLineHostile(lineText(type, EntityType.SKELETON));
+            this.addLineHostile(lineTextH(EntityType.SHULKER));
         }
-        else if(type == InfoToggleHostile.SLIME)
+        else if (type == InfoToggleHostile.SILVERFISH)
         {
-            this.addLineHostile(lineText(type, EntityType.SLIME));
+            this.addLineHostile(lineTextH(EntityType.SILVERFISH));
         }
-        else if(type == InfoToggleHostile.SPIDER)
+        else if (type == InfoToggleHostile.SKELETON)
         {
-            this.addLineHostile(lineText(type, EntityType.SPIDER));
+            this.addLineHostile(lineTextH(EntityType.SKELETON));
         }
-        else if(type == InfoToggleHostile.STRAY)
+        else if (type == InfoToggleHostile.SLIME)
         {
-            this.addLineHostile(lineText(type, EntityType.STRAY));
+            this.addLineHostile(lineTextH(EntityType.SLIME));
         }
-        else if(type == InfoToggleHostile.VEX)
+        else if (type == InfoToggleHostile.SPIDER)
         {
-            this.addLineHostile(lineText(type, EntityType.VEX));
+            this.addLineHostile(lineTextH(EntityType.SPIDER));
         }
-        else if(type == InfoToggleHostile.VINDICATOR)
+        else if (type == InfoToggleHostile.STRAY)
         {
-            this.addLineHostile(lineText(type, EntityType.VINDICATOR));
+            this.addLineHostile(lineTextH(EntityType.STRAY));
         }
-        else if(type == InfoToggleHostile.WITCH)
+        else if (type == InfoToggleHostile.VEX)
         {
-            this.addLineHostile(lineText(type, EntityType.WITCH));
+            this.addLineHostile(lineTextH(EntityType.VEX));
         }
-        else if(type == InfoToggleHostile.WITHER_SKELETON)
+        else if (type == InfoToggleHostile.VINDICATOR)
         {
-            this.addLineHostile(lineText(type, EntityType.WITHER_SKELETON));
+            this.addLineHostile(lineTextH(EntityType.VINDICATOR));
         }
-        else if(type == InfoToggleHostile.ZOMBIE)
+        else if (type == InfoToggleHostile.WITCH)
         {
-            this.addLineHostile(lineText(type, EntityType.ZOMBIE));
+            this.addLineHostile(lineTextH(EntityType.WITCH));
         }
-        else if(type == InfoToggleHostile.ZOMBIE_PIGMAN)
+        else if (type == InfoToggleHostile.WITHER_SKELETON)
         {
-            this.addLineHostile(lineText(type, EntityType.ZOMBIE_PIGMAN));
+            this.addLineHostile(lineTextH(EntityType.WITHER_SKELETON));
         }
-        else if(type == InfoToggleHostile.ZOMBIE_VILLAGER)
+        else if (type == InfoToggleHostile.ZOGLIN)
         {
-            this.addLineHostile(lineText(type, EntityType.ZOMBIE_VILLAGER));
+            this.addLineHostile(lineTextH(EntityType.ZOGLIN));
+        }
+        else if (type == InfoToggleHostile.ZOMBIE)
+        {
+            this.addLineHostile(lineTextH(EntityType.ZOMBIE));
+        }
+        else if (type == InfoToggleHostile.ZOMBIE_VILLAGER)
+        {
+            this.addLineHostile(lineTextH(EntityType.ZOMBIE_VILLAGER));
+        }
+        else if (type == InfoToggleHostile.ZOMBIFIED_PIGLIN)
+        {
+            this.addLineHostile(lineTextH(EntityType.ZOMBIFIED_PIGLIN));
         }
     }
 
@@ -464,11 +482,11 @@ public class MobCountRenderer
         @Override
         public int compareTo(LinePosPassive other)
         {
-            if(this.position < 0)
+            if (this.position < 0)
             {
                 return other.position >= 0 ? 1 : 0;
             }
-            else if(other.position < 0 && this.position >= 0)
+            else if (other.position < 0 && this.position >= 0)
             {
                 return -1;
             }
@@ -491,11 +509,11 @@ public class MobCountRenderer
         @Override
         public int compareTo(LinePosHostile other)
         {
-            if(this.position < 0)
+            if (this.position < 0)
             {
                 return other.position >= 0 ? 1 : 0;
             }
-            else if(other.position < 0 && this.position >= 0)
+            else if (other.position < 0 && this.position >= 0)
             {
                 return -1;
             }

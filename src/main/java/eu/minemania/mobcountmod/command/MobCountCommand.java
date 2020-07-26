@@ -49,7 +49,7 @@ public class MobCountCommand extends MobCountCommandBase
 
     private static int info(CommandContext<ServerCommandSource> context)
     {
-        localOutput(context.getSource(), Reference.MOD_NAME + " ["+ Reference.MOD_VERSION+"]");
+        localOutput(context.getSource(), Reference.MOD_NAME + " [" + Reference.MOD_VERSION + "]");
         localOutputT(context.getSource(), "mcm.message.command.info");
         return 1;
     }
@@ -66,7 +66,7 @@ public class MobCountCommand extends MobCountCommandBase
         }
         catch (Exception e)
         {
-            if(Configs.Generic.MESSAGE_LIST.getStrings() == null)
+            if (Configs.Generic.MESSAGE_LIST.getStrings() == null)
             {
                 localOutputT(context.getSource(), "mcm.message.command.message.not_notify");
             }
@@ -116,7 +116,7 @@ public class MobCountCommand extends MobCountCommandBase
         {
             on = getBool(context, "on");
             Configs.Generic.NOTIFYFACTION.setBooleanValue(on);
-            if(on)
+            if (on)
             {
                 localOutputT(context.getSource(), "mcm.message.command.faction.notify");
             }
@@ -130,7 +130,7 @@ public class MobCountCommand extends MobCountCommandBase
             String strSetting = Configs.Generic.NOTIFYFACTION.getBooleanValue() ? "mcm.message.setting.on" : "mcm.message.setting.off";
             localOutputT(context.getSource(), "mcm.message.command.faction.enabled", StringUtils.translate(strSetting));
         }
-        if(Configs.Generic.NOTIFYFACTION.getBooleanValue())
+        if (Configs.Generic.NOTIFYFACTION.getBooleanValue())
         {
             localOutputT(context.getSource(), "mcm.message.command.faction.notifying");
         }
@@ -148,7 +148,7 @@ public class MobCountCommand extends MobCountCommandBase
         {
             on = getBool(context, "on");
             Configs.Generic.XP5.setBooleanValue(on);
-            if(on)
+            if (on)
             {
                 localOutputT(context.getSource(), "mcm.message.command.xp5.shocker");
             }
@@ -170,18 +170,18 @@ public class MobCountCommand extends MobCountCommandBase
         localOutputT(context.getSource(), "mcm.message.command.help", Reference.MOD_NAME, Reference.MOD_VERSION);
         int cmdCount = 0;
         CommandDispatcher<ServerCommandSource> dispatcher = Command.commandDispatcher;
-        for(CommandNode<ServerCommandSource> command : dispatcher.getRoot().getChildren())
+        for (CommandNode<ServerCommandSource> command : dispatcher.getRoot().getChildren())
         {
             String cmdName = command.getName();
-            if(ClientCommandManager.isClientSideCommand(cmdName))
+            if (ClientCommandManager.isClientSideCommand(cmdName))
             {
                 Map<CommandNode<ServerCommandSource>, String> usage = dispatcher.getSmartUsage(command, context.getSource());
-                for(String u : usage.values())
+                for (String u : usage.values())
                 {
                     ClientCommandManager.sendFeedback(new LiteralText("/" + cmdName + " " + u));
                 }
                 cmdCount += usage.size();
-                if(usage.size() == 0)
+                if (usage.size() == 0)
                 {
                     ClientCommandManager.sendFeedback(new LiteralText("/" + cmdName));
                     cmdCount++;

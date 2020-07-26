@@ -16,7 +16,7 @@ import net.minecraft.client.MinecraftClient;
 public class KeyCallbacks
 {
     public static void init(MinecraftClient mc)
-    {	
+    {
         IHotkeyCallback callbackHotkeys = new KeyCallbackHotkeys(mc);
         ValueChangeBooleanCallback valueChangeBooleanCallback = new ValueChangeBooleanCallback();
         ValueChangeIntegerCallback valueChangeIntegerCallback = new ValueChangeIntegerCallback();
@@ -42,11 +42,11 @@ public class KeyCallbacks
         @Override
         public boolean onKeyAction(KeyAction action, IKeybind key)
         {
-            if(this.mc.player == null || this.mc.world == null)
+            if (this.mc.player == null || this.mc.world == null)
             {
                 return false;
             }
-            if(key == Hotkeys.OPEN_GUI_SETTINGS.getKeybind())
+            if (key == Hotkeys.OPEN_GUI_SETTINGS.getKeybind())
             {
                 GuiBase.openGui(new GuiConfigs());
                 return true;
@@ -65,7 +65,7 @@ public class KeyCallbacks
         @Override
         public void onValueChanged(ConfigBoolean config)
         {
-            if(config == Configs.Generic.XP5)
+            if (config == Configs.Generic.XP5)
             {
                 DataManager.getCounter().setXP5(config.getBooleanValue());
             }
@@ -82,11 +82,11 @@ public class KeyCallbacks
         @Override
         public void onValueChanged(ConfigInteger config)
         {
-            if(config == Configs.Generic.RADIUS_HOSTILE)
+            if (config == Configs.Generic.RADIUS_HOSTILE)
             {
                 DataManager.getCounter().setRadius(config.getIntegerValue(), false);
             }
-            else if(config == Configs.Generic.RADIUS_PASSIVE)
+            else if (config == Configs.Generic.RADIUS_PASSIVE)
             {
                 DataManager.getCounter().setRadius(config.getIntegerValue(), true);
             }

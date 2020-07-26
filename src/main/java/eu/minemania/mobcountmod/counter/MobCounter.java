@@ -37,9 +37,9 @@ public class MobCounter
     {
         PlayerEntity player = MinecraftClient.getInstance().player;
 
-        int x = (int)player.getX();
-        int y = (int)player.getY();
-        int z = (int)player.getZ();
+        int x = (int) player.getX();
+        int y = (int) player.getY();
+        int z = (int) player.getZ();
 
         this.boundingBoxP = new Box(x - this.radiusP, y - this.radiusP, z - this.radiusP, x + this.radiusP, y + this.radiusP, z + this.radiusP);
     }
@@ -50,9 +50,9 @@ public class MobCounter
         {
             PlayerEntity player = MinecraftClient.getInstance().player;
 
-            int x = (int)player.getX();
-            int y = (int)player.getY();
-            int z = (int)player.getZ();
+            int x = (int) player.getX();
+            int y = (int) player.getY();
+            int z = (int) player.getZ();
 
             this.boundingBoxH = new Box(x - this.radiusH, y - this.radiusH, z - this.radiusH, x + this.radiusH, y + this.radiusH, z + this.radiusH);
         }
@@ -96,7 +96,7 @@ public class MobCounter
 
     public void setRadius(int radius, boolean passive)
     {
-        if(passive)
+        if (passive)
         {
             this.radiusP = radius;
         }

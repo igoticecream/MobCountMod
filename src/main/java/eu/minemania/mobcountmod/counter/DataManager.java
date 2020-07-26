@@ -1,6 +1,7 @@
 package eu.minemania.mobcountmod.counter;
 
 import java.io.File;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -122,13 +123,13 @@ public class DataManager
             {
                 if (Configs.Generic.NOTIFYFACTION.getBooleanValue())
                 {
-                    MinecraftClient.getInstance().player.sendChatMessage("/ch qm f Automated Message: "	+ hostileCount + " mobz. Kill pl0x.");
+                    MinecraftClient.getInstance().player.sendChatMessage("/ch qm f Automated Message: " + hostileCount + " mobz. Kill pl0x.");
                 }
                 if (Configs.Generic.MESSAGE_LIST.getStrings() != null && Configs.Generic.MESSAGE_LIST.getStrings().size() > 0)
                 {
                     for (String player : Configs.Generic.MESSAGE_LIST.getStrings())
                     {
-                        MinecraftClient.getInstance().player.sendChatMessage("/m " + player	+ " Automated Message: " + hostileCount + " mobz. Kill pl0x.");
+                        MinecraftClient.getInstance().player.sendChatMessage("/m " + player + " Automated Message: " + hostileCount + " mobz. Kill pl0x.");
                     }
                 }
                 this.sendMsgCount++;
@@ -146,7 +147,7 @@ public class DataManager
 
         JsonElement element = JsonUtils.parseJsonFile(file);
 
-        if(element != null && element.isJsonObject())
+        if (element != null && element.isJsonObject())
         {
 
             JsonObject root = element.getAsJsonObject();
@@ -158,7 +159,8 @@ public class DataManager
                     configGuiTab = ConfigGuiTab.valueOf(root.get("config_gui_tab").getAsString());
                 }
                 catch (Exception e)
-                {}
+                {
+                }
 
                 if (configGuiTab == null)
                 {
@@ -177,7 +179,7 @@ public class DataManager
 
     public static void save(boolean forceSave)
     {
-        if(canSave == false && forceSave == false)
+        if (canSave == false && forceSave == false)
         {
             return;
         }
@@ -196,7 +198,7 @@ public class DataManager
     {
         File dir = getCurrentConfigDirectory();
 
-        if(dir.exists() == false && dir.mkdirs() == false)
+        if (dir.exists() == false && dir.mkdirs() == false)
         {
             MobCountMod.logger.warn("Failed to create the config directory '{}'", dir.getAbsolutePath());
         }
@@ -209,9 +211,9 @@ public class DataManager
         MinecraftClient mc = MinecraftClient.getInstance();
         String name = StringUtils.getWorldOrServerName();
 
-        if(name != null)
+        if (name != null)
         {
-            if(globalData)
+            if (globalData)
             {
                 return Reference.MOD_ID + "_" + name + ".json";
             }

@@ -14,41 +14,40 @@ import fi.dy.masa.malilib.util.StringUtils;
 
 public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
 {
-    BAT              ("infoBat",             "entity.minecraft.bat",              false, 10, "", "mcm.description.config.infotoggle", "bats"),
-    BEE              ("infoBee",             "entity.minecraft.bee",              false, 23, "", "mcm.description.config.infotoggle", "bees"),
-    CAT              ("infoCat",             "entity.minecraft.cat",              false, 11, "", "mcm.description.config.infotoggle", "cats"),
-    CHICKEN          ("infoChicken",         "entity.minecraft.chicken",          false, 1,  "", "mcm.description.config.infotoggle", "chickens"),
-    COW              ("infoCow",             "entity.minecraft.cow",              false, 4,  "", "mcm.description.config.infotoggle", "cows"),
-    DONKEY           ("infoDonkey",          "entity.minecraft.donkey",           false, 24, "", "mcm.description.config.infotoggle", "donkeys"),
-    DOLPHIN          ("infoDolphin",         "entity.minecraft.dolphin",          false, 17, "", "mcm.description.config.infotoggle", "dolphins"),
-    FISH             ("infoFish",            "entity.minecraft.tropical_fish",    false, 15, "", "mcm.description.config.infotoggle", "fishes"),
-    FOX              ("infoFox",             "entity.minecraft.fox",              false, 18, "", "mcm.description.config.infotoggle", "foxes"),
-    HORSE            ("infoHorse",           "entity.minecraft.horse",            false, 5,  "", "mcm.description.config.infotoggle", "horses"),
-    IRONGOLEM        ("infoIronGolem",       "entity.minecraft.iron_golem",       false, 12, "", "mcm.description.config.infotoggle", "iron golems"),
-    LLAMA            ("infoLlama",           "entity.minecraft.llama",            false, 25, "", "mcm.description.config.infotoggle", "llamas"),
-    MOOSHROOM        ("infoMooshroom",       "entity.minecraft.mooshroom",        false, 26, "", "mcm.description.config.infotoggle", "mooshrooms"),
-    MULE             ("infoMule",            "entity.minecraft.mule",             false, 27, "", "mcm.description.config.infotoggle", "mules"),
-    OCELOT           ("infoOcelot",          "entity.minecraft.ocelot",           false, 8,  "", "mcm.description.config.infotoggle", "ocelots"),
-    PANDA            ("infoPanda",           "entity.minecraft.panda",            false, 19, "", "mcm.description.config.infotoggle", "pandas"),
-    PARROT           ("infoParrot",          "entity.minecraft.parrot",           false, 9,  "", "mcm.description.config.infotoggle", "parrots"),
-    PIG              ("infoPig",             "entity.minecraft.pig",              false, 2,  "", "mcm.description.config.infotoggle", "pigs"),
-    PLAYER           ("infoPlayer",          "entity.minecraft.player",           false, 14, "", "mcm.description.config.infotoggle", "players"),
-    POLARBEAR        ("infoPolarBear",       "entity.minecraft.polar_bear",       false, 20, "", "mcm.description.config.infotoggle", "polarbears"),
-    RABBIT           ("infoRabbit",          "entity.minecraft.rabbit",           false, 6,  "", "mcm.description.config.infotoggle", "rabbits"),
-    SHEEP            ("infoSheep",           "entity.minecraft.sheep",            false, 3,  "", "mcm.description.config.infotoggle", "sheep"),
-    SKELETON_HORSE   ("infoSkeletonHorse",   "entity.minecraft.skeleton_horse",   false, 28, "", "mcm.description.config.infotoggle", "skeleton horses"),
-    SNOW_GOLEM       ("infoSnowGolem",       "entity.minecraft.snow_golem",       false, 13, "", "mcm.description.config.infotoggle", "snow golems"),
-    SQUID            ("infoSquid",           "entity.minecraft.squid",            false, 21, "", "mcm.description.config.infotoggle", "squids"),
-    TRADER_LLAMA     ("infoTraderLlama",     "entity.minecraft.trader_llama",     false, 29, "", "mcm.description.config.infotoggle", "trader llamas"),
-    TURTLE           ("infoTurtle",          "entity.minecraft.turtle",           false, 22, "", "mcm.description.config.infotoggle", "turtles"),
-    VILLAGER         ("infoVillager",        "entity.minecraft.villager",         false, 16, "", "mcm.description.config.infotoggle", "villagers"),
-    WANDERING_TRADER ("infoWanderingTrader", "entity.minecraft.wandering_trader", false, 30, "", "mcm.description.config.infotoggle", "wandering traders"),
-    WOLF             ("infoWolf",            "entity.minecraft.wolf",             false, 7,  "", "mcm.description.config.infotoggle", "wolves"),
-    ZOMBIE_HORSE     ("infoZombieHorse",     "entity.minecraft.zombie_horse",     false, 31, "", "mcm.description.config.infotoggle", "zombie horses");
+    BAT("infoBat", false, 10, "", "bats"),
+    BEE("infoBee", false, 23, "", "bees"),
+    CAT("infoCat", false, 11, "", "cats"),
+    CHICKEN("infoChicken", false, 1, "", "chickens"),
+    COW("infoCow", false, 4, "", "cows"),
+    DONKEY("infoDonkey", false, 24, "", "donkeys"),
+    DOLPHIN("infoDolphin", false, 17, "", "dolphins"),
+    FISH("infoFish", false, 15, "", "fishes"),
+    FOX("infoFox", false, 18, "", "foxes"),
+    HORSE("infoHorse", false, 5, "", "horses"),
+    IRONGOLEM("infoIronGolem", false, 12, "", "iron golems"),
+    LLAMA("infoLlama", false, 25, "", "llamas"),
+    MOOSHROOM("infoMooshroom", false, 26, "", "mooshrooms"),
+    MULE("infoMule", false, 27, "", "mules"),
+    OCELOT("infoOcelot", false, 8, "", "ocelots"),
+    PANDA("infoPanda", false, 19, "", "pandas"),
+    PARROT("infoParrot", false, 9, "", "parrots"),
+    PIG("infoPig", false, 2, "", "pigs"),
+    PLAYER("infoPlayer", false, 14, "", "players"),
+    POLARBEAR("infoPolarBear", false, 20, "", "polarbears"),
+    RABBIT("infoRabbit", false, 6, "", "rabbits"),
+    SHEEP("infoSheep", false, 3, "", "sheep"),
+    SKELETON_HORSE("infoSkeletonHorse", false, 28, "", "skeleton horses"),
+    SNOW_GOLEM("infoSnowGolem", false, 13, "", "snow golems"),
+    SQUID("infoSquid", false, 21, "", "squids"),
+    STRIDER("infoStrider", false, 32, "", "Striders"),
+    TRADER_LLAMA("infoTraderLlama", false, 29, "", "trader llamas"),
+    TURTLE("infoTurtle", false, 22, "", "turtles"),
+    VILLAGER("infoVillager", false, 16, "", "villagers"),
+    WANDERING_TRADER("infoWanderingTrader", false, 30, "", "wandering traders"),
+    WOLF("infoWolf", false, 7, "", "wolves"),
+    ZOMBIE_HORSE("infoZombieHorse", false, 31, "", "zombie horses");
 
     private final String name;
-    private final String prettyName;
-    private final String comment;
     private final IKeybind keybind;
     private final boolean defaultValueBoolean;
     private final int defaultLinePosition;
@@ -56,22 +55,20 @@ public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
     private int linePosition;
     private Object[] commentArgs;
 
-    private InfoTogglePassive(String name, String prettyName, boolean defaultValue, int linePosition, String defaultHotkey, String comment, Object... commentArgs)
+    InfoTogglePassive(String name, boolean defaultValue, int linePosition, String defaultHotkey, Object... commentArgs)
     {
-        this(name, prettyName, defaultValue, linePosition, defaultHotkey, comment, KeybindSettings.DEFAULT, commentArgs);
+        this(name, defaultValue, linePosition, defaultHotkey, KeybindSettings.DEFAULT, commentArgs);
     }
 
-    private InfoTogglePassive(String name, String prettyName, boolean defaultValue, int linePosition, String defaultHotkey, String comment, KeybindSettings settings, Object... commentArgs)
+    InfoTogglePassive(String name, boolean defaultValue, int linePosition, String defaultHotkey, KeybindSettings settings, Object... commentArgs)
     {
         this.name = name;
-        this.prettyName = prettyName;
         this.valueBoolean = defaultValue;
         this.defaultValueBoolean = defaultValue;
         this.keybind = KeybindMulti.fromStorageString(defaultHotkey, settings);
         this.keybind.setCallback(new KeyCallbackToggleBoolean(this));
         this.linePosition = linePosition;
         this.defaultLinePosition = linePosition;
-        this.comment = comment;
         this.commentArgs = commentArgs;
     }
 
@@ -88,20 +85,14 @@ public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
     }
 
     @Override
-    public String getPrettyName()
-    {
-        return StringUtils.translate(this.prettyName);
-    }
-
-    @Override
     public String getComment()
     {
-        return comment != null ? StringUtils.translate(this.comment, getCommentArgs()) : "";
+        return StringUtils.translate("mcm.description.config.infotoggle", getCommentArgs());
     }
 
     public Object[] getCommentArgs()
     {
-        if(this.commentArgs != null)
+        if (this.commentArgs != null)
         {
             return this.commentArgs;
         }
@@ -113,7 +104,7 @@ public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
     {
         try
         {
-            if(element.isJsonPrimitive())
+            if (element.isJsonPrimitive())
             {
                 this.valueBoolean = element.getAsBoolean();
             }
