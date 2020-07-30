@@ -32,6 +32,7 @@ public class Configs implements IConfigHandler
     {
         public static final ConfigInteger COUNT_HOSTILE = new ConfigInteger("countHostile", 16, "mcm.description.config.count_hostile");
         public static final ConfigInteger COUNT_PASSIVE = new ConfigInteger("countPassive", 16, "mcm.description.config.count_passive");
+        public static final ConfigBoolean DISPLAY_ALL = new ConfigBoolean("displayAll", true, "mcm.description.config.display_all");
         public static final ConfigBoolean ENABLED = new ConfigBoolean("enabled", true, "mcm.description.config.enabled");
         public static final ConfigStringList MESSAGE_LIST = new ConfigStringList("messageList", ImmutableList.of(), "mcm.description.config.message_list");
         public static final ConfigBoolean NOTIFYFACTION = new ConfigBoolean("notifyFaction", false, "mcm.description.config.notifyfaction");
@@ -43,6 +44,7 @@ public class Configs implements IConfigHandler
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
                 COUNT_HOSTILE,
                 COUNT_PASSIVE,
+                DISPLAY_ALL,
                 ENABLED,
                 MESSAGE_LIST,
                 NOTIFYFACTION,

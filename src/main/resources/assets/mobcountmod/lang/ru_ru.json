@@ -2,6 +2,7 @@
   "mcm.description.config.count_hostile": "Количество за враждебных мобов, прежде чем слишком много сущностей",
   "mcm.description.config.count_passive": "Количество за дружелюбных мобов, прежде чем слишком много сущностей",
   "mcm.description.config.enabled": "Включает мода MobCountMod по полностью",
+  "mcm.description.config.display_all": "Показывает всех мобов сразу мобов",
   "mcm.description.config.infotoggle": "Показывает количество мобов %s",
   "mcm.description.config.message_list": "Список уведомление для игроков",
   "mcm.description.config.notifyfaction": "Если включено, уведомляет в чате фракции",

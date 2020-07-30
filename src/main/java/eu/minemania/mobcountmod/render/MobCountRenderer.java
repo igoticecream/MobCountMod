@@ -78,8 +78,8 @@ public class MobCountRenderer
         this.totalHostile = 0;
         this.totalPassive = 0;
 
-        List<LinePosPassive> positionsPassive = new ArrayList<LinePosPassive>();
-        List<LinePosHostile> positionsHostile = new ArrayList<LinePosHostile>();
+        List<LinePosPassive> positionsPassive = new ArrayList<>();
+        List<LinePosHostile> positionsHostile = new ArrayList<>();
 
 
         for (InfoTogglePassive toggle : InfoTogglePassive.values())
@@ -162,12 +162,18 @@ public class MobCountRenderer
 
     private void addLineHostile(String text)
     {
-        this.lineWrappersHostile.add(new StringHolder(text));
+        if (!text.isEmpty())
+        {
+            this.lineWrappersHostile.add(new StringHolder(text));
+        }
     }
 
     private void addLinePassive(String text)
     {
-        this.lineWrappersPassive.add(new StringHolder(text));
+        if (!text.isEmpty())
+        {
+            this.lineWrappersPassive.add(new StringHolder(text));
+        }
     }
 
     private <T extends Entity> String lineTextP(EntityType<T> entity)
@@ -175,7 +181,7 @@ public class MobCountRenderer
         MinecraftClient mc = MinecraftClient.getInstance();
         int size = mc.world.getEntities(entity, DataManager.getCounter().getPassiveBB(), EntityPredicates.EXCEPT_SPECTATOR).size() - (!StringUtils.translate(entity.getTranslationKey()).equals("Player") ? 0 : (mc.player.isSpectator() ? 0 : 1));
         totalPassive += size;
-        return String.format("%s: %s%d%s", StringUtils.translate(entity.getTranslationKey()), size > Configs.Generic.COUNT_PASSIVE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
+        return size == 0 && !Configs.Generic.DISPLAY_ALL.getBooleanValue() ? "" : String.format("%s: %s%d%s", StringUtils.translate(entity.getTranslationKey()), size > Configs.Generic.COUNT_PASSIVE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
     }
 
     private <T extends Entity> String lineText(Class<? extends T> entity)
@@ -183,7 +189,7 @@ public class MobCountRenderer
         MinecraftClient mc = MinecraftClient.getInstance();
         int size = mc.world.getEntities(entity, DataManager.getCounter().getPassiveBB(), EntityPredicates.EXCEPT_SPECTATOR).size();
         totalPassive += size;
-        return String.format("%s: %s%d%s", StringUtils.translate(EntityType.TROPICAL_FISH.getTranslationKey()), size > Configs.Generic.COUNT_PASSIVE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
+        return size == 0 && !Configs.Generic.DISPLAY_ALL.getBooleanValue() ? "" : String.format("%s: %s%d%s", StringUtils.translate(EntityType.TROPICAL_FISH.getTranslationKey()), size > Configs.Generic.COUNT_PASSIVE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
     }
 
     private <T extends Entity> String lineTextH(EntityType<T> entity)
@@ -191,7 +197,7 @@ public class MobCountRenderer
         MinecraftClient mc = MinecraftClient.getInstance();
         int size = mc.world.getEntities(entity, DataManager.getCounter().getHostileBB(), EntityPredicates.EXCEPT_SPECTATOR).size();
         totalHostile += size;
-        return String.format("%s: %s%d%s", StringUtils.translate(entity.getTranslationKey()), size > Configs.Generic.COUNT_HOSTILE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
+        return size == 0 && !Configs.Generic.DISPLAY_ALL.getBooleanValue() ? "" : String.format("%s: %s%d%s", StringUtils.translate(entity.getTranslationKey()), size > Configs.Generic.COUNT_HOSTILE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
     }
 
     private void addLinePassive(InfoTogglePassive type)

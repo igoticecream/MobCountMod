@@ -1,6 +1,7 @@
 {
   "mcm.description.config.count_hostile": "Amount per hostile mob before too much entities",
   "mcm.description.config.count_passive": "Amount per passive mob before too much entities",
+  "mcm.description.config.display_all": "Displays all entities at once",
   "mcm.description.config.enabled": "Enables MobCountMod fully",
   "mcm.description.config.infotoggle": "Show the amount of %s",
   "mcm.description.config.message_list": "List to notify players",
