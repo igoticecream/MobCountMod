@@ -30,6 +30,7 @@ public enum InfoToggleHostile implements IConfigInteger, IHotkeyTogglable
     MAGMA_CUBE("infoMagmaCube", false, 24, "", "magma cubes"),
     PHANTOM("infoPhantom", false, 9, "", "phantoms"),
     PIGLIN("infoPiglin", false, 31, "", "piglins"),
+    PIGLIN_BRUTE("infoPiglinBrute", false, 33, "", "piglin brutes"),
     PILLAGER("infoPillager", false, 8, "", "pillagers"),
     RAVAGER("infoRavager", false, 10, "", "ravagers"),
     SHULKER("infoShulker", false, 16, "", "shulkers"),

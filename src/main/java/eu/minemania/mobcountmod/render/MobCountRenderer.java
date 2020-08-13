@@ -179,7 +179,7 @@ public class MobCountRenderer
     private <T extends Entity> String lineTextP(EntityType<T> entity)
     {
         MinecraftClient mc = MinecraftClient.getInstance();
-        int size = mc.world.getEntities(entity, DataManager.getCounter().getPassiveBB(), EntityPredicates.EXCEPT_SPECTATOR).size() - (!StringUtils.translate(entity.getTranslationKey()).equals("Player") ? 0 : (mc.player.isSpectator() ? 0 : 1));
+        int size = mc.world.getEntitiesByType(entity, DataManager.getCounter().getPassiveBB(), EntityPredicates.EXCEPT_SPECTATOR).size() - (!StringUtils.translate(entity.getTranslationKey()).equals("Player") ? 0 : (mc.player.isSpectator() ? 0 : 1));
         totalPassive += size;
         return size == 0 && !Configs.Generic.DISPLAY_ALL.getBooleanValue() ? "" : String.format("%s: %s%d%s", StringUtils.translate(entity.getTranslationKey()), size > Configs.Generic.COUNT_PASSIVE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
     }
@@ -187,7 +187,7 @@ public class MobCountRenderer
     private <T extends Entity> String lineText(Class<? extends T> entity)
     {
         MinecraftClient mc = MinecraftClient.getInstance();
-        int size = mc.world.getEntities(entity, DataManager.getCounter().getPassiveBB(), EntityPredicates.EXCEPT_SPECTATOR).size();
+        int size = mc.world.getEntitiesByClass(entity, DataManager.getCounter().getPassiveBB(), EntityPredicates.EXCEPT_SPECTATOR).size();
         totalPassive += size;
         return size == 0 && !Configs.Generic.DISPLAY_ALL.getBooleanValue() ? "" : String.format("%s: %s%d%s", StringUtils.translate(EntityType.TROPICAL_FISH.getTranslationKey()), size > Configs.Generic.COUNT_PASSIVE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
     }
@@ -195,7 +195,7 @@ public class MobCountRenderer
     private <T extends Entity> String lineTextH(EntityType<T> entity)
     {
         MinecraftClient mc = MinecraftClient.getInstance();
-        int size = mc.world.getEntities(entity, DataManager.getCounter().getHostileBB(), EntityPredicates.EXCEPT_SPECTATOR).size();
+        int size = mc.world.getEntitiesByType(entity, DataManager.getCounter().getHostileBB(), EntityPredicates.EXCEPT_SPECTATOR).size();
         totalHostile += size;
         return size == 0 && !Configs.Generic.DISPLAY_ALL.getBooleanValue() ? "" : String.format("%s: %s%d%s", StringUtils.translate(entity.getTranslationKey()), size > Configs.Generic.COUNT_HOSTILE.getIntegerValue() ? GuiBase.TXT_RED : GuiBase.TXT_GREEN, size, GuiBase.TXT_RST);
     }
@@ -401,6 +401,10 @@ public class MobCountRenderer
         else if (type == InfoToggleHostile.PILLAGER)
         {
             this.addLineHostile(lineTextH(EntityType.PILLAGER));
+        }
+        else if (type == InfoToggleHostile.PIGLIN_BRUTE)
+        {
+            this.addLineHostile(lineTextH(EntityType.PIGLIN_BRUTE));
         }
         else if (type == InfoToggleHostile.RAVAGER)
         {
