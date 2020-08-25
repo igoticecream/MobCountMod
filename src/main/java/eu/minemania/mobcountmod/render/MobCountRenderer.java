@@ -59,7 +59,7 @@ public class MobCountRenderer
             DataManager.getCounter().updateBBP();
             RenderUtils.renderText(5, 5, 0xFFAA00, StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusP()), matrixStack);
             RenderUtils.renderText(5, 15, StringUtils.getColor("#E0E0E0", 0), this.linesPassive, matrixStack);
-            RenderUtils.renderText(60, 5, getColor(this.totalPassive, true), StringUtils.translate("mcm.message.mobcounter.total", this.totalPassive), matrixStack);
+            RenderUtils.renderText(75, 5, getColor(this.totalPassive, true), StringUtils.translate("mcm.message.mobcounter.total", this.totalPassive), matrixStack);
         }
 
         if (DataManager.visibleHostile() == 1)
@@ -67,7 +67,7 @@ public class MobCountRenderer
             DataManager.getCounter().updateBBH();
             RenderUtils.renderText(125, 5, 0xFFAA00, StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusH()), matrixStack);
             RenderUtils.renderText(125, 15, StringUtils.getColor("#E0E0E0", 0), this.linesHostile, matrixStack);
-            RenderUtils.renderText(180, 5, getColor(this.totalHostile, false), StringUtils.translate("mcm.message.mobcounter.total", this.totalHostile), matrixStack);
+            RenderUtils.renderText(195, 5, getColor(this.totalHostile, false), StringUtils.translate("mcm.message.mobcounter.total", this.totalHostile), matrixStack);
         }
     }
 
