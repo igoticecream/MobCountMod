@@ -446,6 +446,10 @@ public class MobCountRenderer
         {
             this.addLineHostile(lineTextH(EntityType.WITCH));
         }
+        else if (type == InfoToggleHostile.WITHER)
+        {
+            this.addLineHostile(lineTextH(EntityType.WITHER));
+        }
         else if (type == InfoToggleHostile.WITHER_SKELETON)
         {
             this.addLineHostile(lineTextH(EntityType.WITHER_SKELETON));
