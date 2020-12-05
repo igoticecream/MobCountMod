@@ -102,6 +102,19 @@ public class InputHandler implements IKeybindProvider, IKeyboardInputHandler, IM
                     }
                     return true;
                 }
+                if (Hotkeys.TOGGLE_BOTH.getKeybind().isKeybindHeld())
+                {
+                    DataManager.upVisibleCounter();
+                    DataManager.upVisibleHostile();
+                    if (DataManager.visibleCounter() > 1)
+                    {
+                        DataManager.resetVisibleCounter();
+                    }
+                    if (DataManager.visibleHostile() > 1)
+                    {
+                        DataManager.resetVisibleHostile();
+                    }
+                }
             }
         }
         return false;

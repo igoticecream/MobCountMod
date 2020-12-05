@@ -14,6 +14,7 @@ import fi.dy.masa.malilib.util.StringUtils;
 
 public enum InfoToggleHostile implements IConfigInteger, IHotkeyTogglable
 {
+    RADIUS_COUNTER("infoRadiusCounter", true, 99, "", "radius counter"),
     BLAZE("infoBlaze", true, 13, "", "blazes"),
     CAVE_SPIDER("infoCaveSpider", true, 18, "", "cave spiders"),
     CREEPER("infoCreeper", true, 3, "", "creepers"),

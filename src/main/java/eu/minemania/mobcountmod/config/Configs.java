@@ -1,5 +1,6 @@
 package eu.minemania.mobcountmod.config;
 
+import fi.dy.masa.malilib.config.HudAlignment;
 import fi.dy.masa.malilib.config.IConfigHandler;
 
 import java.io.File;
@@ -11,10 +12,7 @@ import com.google.gson.JsonPrimitive;
 import eu.minemania.mobcountmod.Reference;
 import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.IConfigBase;
-import fi.dy.masa.malilib.config.options.ConfigBoolean;
-import fi.dy.masa.malilib.config.options.ConfigInteger;
-import fi.dy.masa.malilib.config.options.ConfigString;
-import fi.dy.masa.malilib.config.options.ConfigStringList;
+import fi.dy.masa.malilib.config.options.*;
 import fi.dy.masa.malilib.util.FileUtils;
 import fi.dy.masa.malilib.util.JsonUtils;
 
@@ -30,10 +28,14 @@ public class Configs implements IConfigHandler
      */
     public static class Generic
     {
+        public static final ConfigColor COLOR_BACK_DEFAULT = new ConfigColor("colorBackDefault", "#30FFF0E0", "mcm.description.config.color_back_default");
+        public static final ConfigColor COLOR_FORE_DEFAULT = new ConfigColor("colorForeDefault", "#00E0E0E0", "mcm.description.config.color_fore_default");
         public static final ConfigInteger COUNT_HOSTILE = new ConfigInteger("countHostile", 16, "mcm.description.config.count_hostile");
         public static final ConfigInteger COUNT_PASSIVE = new ConfigInteger("countPassive", 16, "mcm.description.config.count_passive");
+        public static final ConfigBoolean CUSTOM_BG_COLOR = new ConfigBoolean("customBgColor", false, "mcm.description.config.custom_bg_color");
         public static final ConfigBoolean DISPLAY_ALL = new ConfigBoolean("displayAll", false, "mcm.description.config.display_all");
         public static final ConfigBoolean ENABLED = new ConfigBoolean("enabled", true, "mcm.description.config.enabled");
+        public static final ConfigOptionList HUD_ALIGNMENT = new ConfigOptionList("hudAlignment", HudAlignment.TOP_LEFT, "mcm.description.config.hudalignment");
         public static final ConfigStringList MESSAGE_LIST = new ConfigStringList("messageList", ImmutableList.of(), "mcm.description.config.message_list");
         public static final ConfigBoolean NOTIFYFACTION = new ConfigBoolean("notifyFaction", false, "mcm.description.config.notifyfaction");
         public static final ConfigInteger RADIUS_HOSTILE = new ConfigInteger("radiusHostile", 16, "mcm.description.config.radius_hostile");
@@ -42,10 +44,14 @@ public class Configs implements IConfigHandler
         public static final ConfigBoolean XP5 = new ConfigBoolean("xp5", false, "mcm.description.config.xp5");
 
         public static final ImmutableList<IConfigBase> OPTIONS = ImmutableList.of(
+                COLOR_BACK_DEFAULT,
+                COLOR_FORE_DEFAULT,
                 COUNT_HOSTILE,
                 COUNT_PASSIVE,
+                CUSTOM_BG_COLOR,
                 DISPLAY_ALL,
                 ENABLED,
+                HUD_ALIGNMENT,
                 MESSAGE_LIST,
                 NOTIFYFACTION,
                 RADIUS_HOSTILE,

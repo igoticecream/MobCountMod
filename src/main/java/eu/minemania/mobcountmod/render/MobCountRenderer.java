@@ -8,6 +8,7 @@ import eu.minemania.mobcountmod.config.Configs;
 import eu.minemania.mobcountmod.config.InfoToggleHostile;
 import eu.minemania.mobcountmod.config.InfoTogglePassive;
 import eu.minemania.mobcountmod.counter.DataManager;
+import fi.dy.masa.malilib.config.HudAlignment;
 import fi.dy.masa.malilib.gui.GuiBase;
 import fi.dy.masa.malilib.render.RenderUtils;
 import fi.dy.masa.malilib.util.StringUtils;
@@ -47,6 +48,11 @@ public class MobCountRenderer
     public void renderHUD(MatrixStack matrixStack)
     {
         long currentTime = System.currentTimeMillis();
+        HudAlignment hudAlignment = (HudAlignment) Configs.Generic.HUD_ALIGNMENT.getOptionListValue();
+        int colorBg = Configs.Generic.COLOR_BACK_DEFAULT.getColor().intValue;
+        int colorFg = Configs.Generic.COLOR_FORE_DEFAULT.getColor().intValue;
+        boolean customBg = Configs.Generic.CUSTOM_BG_COLOR.getBooleanValue();
+        int yOff = 15;
 
         if (currentTime - this.infoUpdateTime >= 50)
         {
@@ -54,20 +60,27 @@ public class MobCountRenderer
             this.infoUpdateTime = currentTime;
         }
 
+        if (hudAlignment == HudAlignment.BOTTOM_LEFT || hudAlignment == HudAlignment.BOTTOM_RIGHT)
+        {
+            yOff = 75;
+        }
+
         if (DataManager.visibleCounter() == 1)
         {
             DataManager.getCounter().updateBBP();
-            RenderUtils.renderText(5, 5, 0xFFAA00, StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusP()), matrixStack);
-            RenderUtils.renderText(5, 15, StringUtils.getColor("#E0E0E0", 0), this.linesPassive, matrixStack);
-            RenderUtils.renderText(75, 5, getColor(this.totalPassive, true), StringUtils.translate("mcm.message.mobcounter.total", this.totalPassive), matrixStack);
+            int xOff = 5;
+
+            if (hudAlignment == HudAlignment.CENTER)
+            {
+                xOff = -125;
+            }
+            RenderUtils.renderText(xOff, yOff, 1, colorFg, colorBg, hudAlignment, customBg, true, this.linesPassive, matrixStack);
         }
 
         if (DataManager.visibleHostile() == 1)
         {
             DataManager.getCounter().updateBBH();
-            RenderUtils.renderText(125, 5, 0xFFAA00, StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusH()), matrixStack);
-            RenderUtils.renderText(125, 15, StringUtils.getColor("#E0E0E0", 0), this.linesHostile, matrixStack);
-            RenderUtils.renderText(195, 5, getColor(this.totalHostile, false), StringUtils.translate("mcm.message.mobcounter.total", this.totalHostile), matrixStack);
+            RenderUtils.renderText(125, yOff, 1, colorFg, colorBg, hudAlignment, customBg, true, this.linesHostile, matrixStack);
         }
     }
 
@@ -139,18 +152,18 @@ public class MobCountRenderer
         }
     }
 
-    private int getColor(int amount, boolean passive)
+    private String getColor(int amount, boolean passive)
     {
-        int color = 0xFFFFFF;
+        String color = GuiBase.TXT_WHITE;
         if (passive && amount > 149)
         {
-            color = 0xAA0000;
+            color = GuiBase.TXT_DARK_RED;
         }
         else if (!passive)
         {
             if (amount > 149)
             { // if 150+ mobs, display in red.
-                color = 0xAA0000;
+                color = GuiBase.TXT_DARK_RED;
             }
             else
             {
@@ -202,7 +215,11 @@ public class MobCountRenderer
 
     private void addLinePassive(InfoTogglePassive type)
     {
-        if (type == InfoTogglePassive.BAT)
+        if (type == InfoTogglePassive.RADIUS_COUNTER)
+        {
+            this.addLinePassive(String.format("%s %s%s%s", StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusP()), getColor(totalPassive, true), StringUtils.translate("mcm.message.mobcounter.total", this.totalPassive), GuiBase.TXT_RST));
+        }
+        else if (type == InfoTogglePassive.BAT)
         {
             this.addLinePassive(lineTextP(EntityType.BAT));
         }
@@ -334,7 +351,11 @@ public class MobCountRenderer
 
     private void addLineHostile(InfoToggleHostile type)
     {
-        if (type == InfoToggleHostile.BLAZE)
+        if (type == InfoToggleHostile.RADIUS_COUNTER)
+        {
+            this.addLineHostile(String.format("%s %s%s%s", StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusH()), getColor(totalHostile, false), StringUtils.translate("mcm.message.mobcounter.total", this.totalHostile), GuiBase.TXT_RST));
+        }
+        else if (type == InfoToggleHostile.BLAZE)
         {
             this.addLineHostile(lineTextH(EntityType.BLAZE));
         }

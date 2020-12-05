@@ -14,6 +14,7 @@ import fi.dy.masa.malilib.util.StringUtils;
 
 public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
 {
+    RADIUS_COUNTER("infoRadiusCounter", true, 99, "", "radius counter"),
     BAT("infoBat", true, 10, "", "bats"),
     BEE("infoBee", true, 23, "", "bees"),
     CAT("infoCat", true, 11, "", "cats"),

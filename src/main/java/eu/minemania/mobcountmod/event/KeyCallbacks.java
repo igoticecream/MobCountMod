@@ -28,6 +28,7 @@ public class KeyCallbacks
         Hotkeys.PASSIVE.getKeybind().setCallback(callbackHotkeys);
         Hotkeys.HOSTILE.getKeybind().setCallback(callbackHotkeys);
         Hotkeys.OPEN_GUI_SETTINGS.getKeybind().setCallback(callbackHotkeys);
+        Hotkeys.TOGGLE_BOTH.getKeybind().setCallback(callbackHotkeys);
     }
 
     private static class KeyCallbackHotkeys implements IHotkeyCallback
