@@ -219,6 +219,10 @@ public class MobCountRenderer
         {
             this.addLinePassive(String.format("%s %s%s%s", StringUtils.translate("mcm.message.mobcounter.radius", DataManager.getCounter().getRadiusP()), getColor(totalPassive, true), StringUtils.translate("mcm.message.mobcounter.total", this.totalPassive), GuiBase.TXT_RST));
         }
+        else if (type == InfoTogglePassive.AXOLOTL)
+        {
+            this.addLinePassive(lineTextP(EntityType.AXOLOTL));
+        }
         else if (type == InfoTogglePassive.BAT)
         {
             this.addLinePassive(lineTextP(EntityType.BAT));
@@ -254,6 +258,14 @@ public class MobCountRenderer
         else if (type == InfoTogglePassive.FOX)
         {
             this.addLinePassive(lineTextP(EntityType.FOX));
+        }
+        else if (type == InfoTogglePassive.GLOWSQUID)
+        {
+            this.addLinePassive(lineTextP(EntityType.GLOW_SQUID));
+        }
+        else if (type == InfoTogglePassive.GOAT)
+        {
+            this.addLinePassive(lineTextP(EntityType.GOAT));
         }
         else if (type == InfoTogglePassive.HORSE)
         {

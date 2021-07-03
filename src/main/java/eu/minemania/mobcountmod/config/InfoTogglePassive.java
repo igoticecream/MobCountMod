@@ -15,6 +15,7 @@ import fi.dy.masa.malilib.util.StringUtils;
 public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
 {
     RADIUS_COUNTER("infoRadiusCounter", true, 99, "", "radius counter"),
+    AXOLOTL("infoAxolotl", true, 33, "", "axolotl"),
     BAT("infoBat", true, 10, "", "bats"),
     BEE("infoBee", true, 23, "", "bees"),
     CAT("infoCat", true, 11, "", "cats"),
@@ -24,6 +25,8 @@ public enum InfoTogglePassive implements IConfigInteger, IHotkeyTogglable
     DOLPHIN("infoDolphin", true, 17, "", "dolphins"),
     FISH("infoFish", true, 15, "", "fishes"),
     FOX("infoFox", true, 18, "", "foxes"),
+    GLOWSQUID("infoGlowSquid", true, 34, "", "glow squid"),
+    GOAT("infoGoat", true, 35, "", "goat"),
     HORSE("infoHorse", true, 5, "", "horses"),
     IRONGOLEM("infoIronGolem", true, 12, "", "iron golems"),
     LLAMA("infoLlama", true, 25, "", "llamas"),
