@@ -33,7 +33,7 @@
   "mcm.message.command.faction.notify": "Now notifying in faction chat when over 150 mobs.",
   "mcm.message.command.faction.notifying": "Currently notifying faction chat.",
   "mcm.message.command.help": "%s [%s] commands",
-  "mcm.message.command.info": "Type /counter help for commands.",
+  "mcm.message.command.info": "Type /mobcounter help for commands.",
   "mcm.message.command.message": "Now notifying: %s",
   "mcm.message.command.message.not_notify": "Not currently notifying any players.",
   "mcm.message.command.sound.using": "Now using %s as notification sound.",

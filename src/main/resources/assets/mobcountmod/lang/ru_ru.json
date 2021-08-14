@@ -33,7 +33,7 @@
   "mcm.message.command.faction.notify": "Теперь оповещение в чате фракции, когда более 150 мобов.",
   "mcm.message.command.faction.notifying": "В текущем время уведомляется фракция в чате.",
   "mcm.message.command.help": "%s [%s] команды",
-  "mcm.message.command.info": "Напишите /counter help чтобы узнать.",
+  "mcm.message.command.info": "Напишите /mobcounter help чтобы узнать.",
   "mcm.message.command.message": "Сейчас уведомляет: %s",
   "mcm.message.command.message.not_notify": "Сейчас не уведомляет игроков.",
   "mcm.message.command.sound.using": "Теперь используя %s как звук уведомления.",

@@ -26,8 +26,8 @@ public class MobCountCommand extends MobCountCommandBase
 {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher)
     {
-        ClientCommandManager.addClientSideCommand("counter");
-        LiteralArgumentBuilder<ServerCommandSource> counter = literal("counter").executes(MobCountCommand::info)
+        ClientCommandManager.addClientSideCommand("mobcounter");
+        LiteralArgumentBuilder<ServerCommandSource> counter = literal("mobcounter").executes(MobCountCommand::info)
                 .then(literal("help").executes(MobCountCommand::help))
                 .then(literal("message").executes(MobCountCommand::message)
                         .then(literal("clear").executes(MobCountCommand::message_clear)))
@@ -73,12 +73,12 @@ public class MobCountCommand extends MobCountCommandBase
             else
             {
                 String toSend = "mcm.message.command.message";
-                String names = "";
+                StringBuilder names = new StringBuilder();
                 for (String name : Configs.Generic.MESSAGE_LIST.getStrings())
                 {
-                    names += name + " ";
+                    names.append(name).append(" ");
                 }
-                localOutputT(context.getSource(), toSend, names);
+                localOutputT(context.getSource(), toSend, names.toString());
             }
         }
         return 1;
@@ -103,7 +103,6 @@ public class MobCountCommand extends MobCountCommandBase
         }
         catch (Exception e)
         {
-            soundFile = Configs.Generic.SOUNDFILE.getStringValue();
             localOutputT(context.getSource(), "mcm.message.command.sound.current", Configs.Generic.SOUNDFILE.getStringValue());
         }
         return 1;
