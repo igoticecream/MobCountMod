@@ -4,6 +4,7 @@ import eu.minemania.mobcountmod.config.Configs;
 import eu.minemania.mobcountmod.config.Hotkeys;
 import eu.minemania.mobcountmod.counter.DataManager;
 import eu.minemania.mobcountmod.gui.GuiConfigs;
+import eu.minemania.mobcountmod.gui.GuiEntity;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
 import fi.dy.masa.malilib.config.options.ConfigInteger;
 import fi.dy.masa.malilib.gui.GuiBase;
@@ -27,6 +28,7 @@ public class KeyCallbacks
 
         Hotkeys.PASSIVE.getKeybind().setCallback(callbackHotkeys);
         Hotkeys.HOSTILE.getKeybind().setCallback(callbackHotkeys);
+        Hotkeys.OPEN_ENTITY_GUI.getKeybind().setCallback(callbackHotkeys);
         Hotkeys.OPEN_GUI_SETTINGS.getKeybind().setCallback(callbackHotkeys);
         Hotkeys.TOGGLE_BOTH.getKeybind().setCallback(callbackHotkeys);
     }
@@ -50,6 +52,11 @@ public class KeyCallbacks
             if (key == Hotkeys.OPEN_GUI_SETTINGS.getKeybind())
             {
                 GuiBase.openGui(new GuiConfigs());
+                return true;
+            }
+            if (key == Hotkeys.OPEN_ENTITY_GUI.getKeybind())
+            {
+                GuiBase.openGui(new GuiEntity());
                 return true;
             }
             return false;
