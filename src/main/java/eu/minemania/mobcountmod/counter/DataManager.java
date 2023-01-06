@@ -19,7 +19,7 @@ import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 
 public class DataManager
 {
@@ -107,7 +107,7 @@ public class DataManager
         {
             if (this.playSoundCount == 0)
             {
-                SoundEvent soundEvent = Registry.SOUND_EVENT.get(new Identifier(Configs.Generic.SOUNDFILE.getStringValue()));
+                SoundEvent soundEvent = Registries.SOUND_EVENT.get(new Identifier(Configs.Generic.SOUNDFILE.getStringValue()));
                 if (soundEvent != null)
                 {
                     SoundInstance sound = PositionedSoundInstance.master(soundEvent, 1.0F);
@@ -123,13 +123,13 @@ public class DataManager
             {
                 if (Configs.Generic.NOTIFYFACTION.getBooleanValue())
                 {
-                    MinecraftClient.getInstance().player.sendCommand("ch qm f Automated Message: " + hostileCount + " mobz. Kill pl0x.", null);
+                    MinecraftClient.getInstance().getNetworkHandler().sendChatCommand("ch qm f Automated Message: " + hostileCount + " mobz. Kill pl0x.");
                 }
                 if (Configs.Generic.MESSAGE_LIST.getStrings() != null && Configs.Generic.MESSAGE_LIST.getStrings().size() > 0)
                 {
                     for (String player : Configs.Generic.MESSAGE_LIST.getStrings())
                     {
-                        MinecraftClient.getInstance().player.sendCommand("msg " + player + " Automated Message: " + hostileCount + " mobz. Kill pl0x.", null);
+                        MinecraftClient.getInstance().getNetworkHandler().sendChatCommand("msg " + player + " Automated Message: " + hostileCount + " mobz. Kill pl0x.");
                     }
                 }
                 this.sendMsgCount++;

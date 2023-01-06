@@ -1,6 +1,10 @@
 package eu.minemania.mobcountmod.mixin;
 
-import net.minecraft.client.util.telemetry.TelemetrySender;
+import com.mojang.brigadier.StringReader;
+import eu.minemania.mobcountmod.command.ClientCommandManager;
+import net.minecraft.client.network.ServerInfo;
+import net.minecraft.client.util.telemetry.WorldSession;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -9,14 +13,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.StringReader;
+
 
 import eu.minemania.mobcountmod.command.Command;
+import eu.minemania.mobcountmod.command.ClientCommandManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.util.telemetry.TelemetryManager;
 import net.minecraft.network.packet.s2c.play.CommandTreeS2CPacket;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.command.ServerCommandSource;
+
 
 @Mixin(ClientPlayNetworkHandler.class)
 public abstract class MixinClientPlayNetworkHandler
@@ -26,7 +35,7 @@ public abstract class MixinClientPlayNetworkHandler
 
     @SuppressWarnings("unchecked")
     @Inject(method = "<init>", at = @At("RETURN"))
-    public void onInitMCM(MinecraftClient client, Screen screen, ClientConnection connection, GameProfile profile, TelemetrySender telemetrySender, CallbackInfo ci)
+    public void onInitMCM(MinecraftClient client, Screen screen, ClientConnection connection, @Nullable ServerInfo serverInfo, GameProfile profile, WorldSession worldSession, CallbackInfo ci)
     {
         Command.registerCommands((CommandDispatcher<ServerCommandSource>) (Object) commandDispatcher);
     }
@@ -36,5 +45,18 @@ public abstract class MixinClientPlayNetworkHandler
     public void onOnCommandTreeMCM(CommandTreeS2CPacket packet, CallbackInfo ci)
     {
         Command.registerCommands((CommandDispatcher<ServerCommandSource>) (Object) commandDispatcher);
+    }
+    @Inject(method = "sendChatCommand(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true)
+    private void onSendCommandMCM(String message, CallbackInfo ci)
+    {
+        StringReader reader = new StringReader(message);
+        int cursor = reader.getCursor();
+        String commandName = reader.canRead() ? reader.readUnquotedString() : "";
+        reader.setCursor(cursor);
+        if (ClientCommandManager.isClientSideCommand(commandName))
+        {
+            ClientCommandManager.executeCommand(reader, message);
+            ci.cancel();
+        }
     }
 }
